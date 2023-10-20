@@ -1,31 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>First Blog Page</title>
-    <url>/2023/10/19/First-Blog-Page/</url>
-    <content><![CDATA[<p>This is TEST page <a class="link"   href="https://hexo.io/" >Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.</p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2023/10/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-]]></content>
-  </entry>
-  <entry>
-    <title>Hello World</title>
+    <title>数据通信基础之网络设备</title>
     <url>/2023/10/20/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8B%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/</url>
     <content><![CDATA[<h2 id="数据通信网络"><a href="#数据通信网络" class="headerlink" title="数据通信网络"></a>数据通信网络</h2><p>数据通信网络是由路由器、交换机、防火墙、无线控制器、无线接入点，以及个人电脑、网络打印机、服务器等设备构成的通信网络，其最最基本的功能是<strong>实现数据互通</strong>。</p>
 <h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><p>距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。</p>
@@ -71,5 +47,152 @@
       <tags>
         <tag>Network System Management</tag>
       </tags>
+  </entry>
+  <entry>
+    <title>First Blog Page</title>
+    <url>/2023/10/19/First-Blog-Page/</url>
+    <content><![CDATA[<p>This is TEST page <a class="link"   href="https://hexo.io/" >Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.</p>
+]]></content>
+  </entry>
+  <entry>
+    <title>数据通信基础之华为VRP系统</title>
+    <url>/2023/10/20/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8D%8E%E4%B8%BAVRP%E7%B3%BB%E7%BB%9F/</url>
+    <content><![CDATA[<h2 id="通用路由平台-Versatile-Routing-Platform-VRP"><a href="#通用路由平台-Versatile-Routing-Platform-VRP" class="headerlink" title="通用路由平台 (Versatile Routing Platform, VRP)"></a>通用路由平台 (Versatile Routing Platform, VRP)</h2><p>通用路由平台是华为设备的通用操作系统平台，网络工程师必须熟练掌握VRP的配置。本文主要介绍<strong>CLI界面的使用</strong>。</p>
+<h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><p>距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。</p>
+<ul>
+<li><p>终端设备网络接入</p>
+</li>
+<li><p>二层交换（Layer 2 Switching）</p>
+</li>
+</ul>
+<h2 id="命令行界面-Command-Line-Interface"><a href="#命令行界面-Command-Line-Interface" class="headerlink" title="命令行界面 (Command Line Interface)"></a>命令行界面 (Command Line Interface)</h2><p>VRP系统登陆成功后即进入命令行界面，命令行界面是工程师与网络设备进行交互的常用工具。</p>
+<h2 id="基本命令结构"><a href="#基本命令结构" class="headerlink" title="基本命令结构"></a>基本命令结构</h2><p>华为提供的命令按照一定的格式设计，命令行界面提供对命令的解析，实现对设备的配置和管理。</p>
+<p>对于命令系统，华为提供了以下说明：</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/Users/Administrator/Pictures/Typedown/167207bf-0047-4d48-bb9e-7f5365fad2f3.png"
+                      alt="167207bf-0047-4d48-bb9e-7f5365fad2f3"
+                ></p>
+<ul>
+<li><p>命令字：规定了系统应该执行的功能。</p>
+</li>
+<li><p>关键字：特殊的字符构成，进一步约束命令，是对命令的拓展，也可用于表达命令构成逻辑而增设的补充字符串。</p>
+</li>
+<li><p>参数列表：是对命令执行功能的进一步约束，包括一对或多对参数名和参数值。</p>
+</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/Users/Administrator/Pictures/Typedown/b1ac58c3-3474-42a3-adc8-a2dbc5849a5a.png"
+                      alt="b1ac58c3-3474-42a3-adc8-a2dbc5849a5a"
+                ></p>
+<p>每条命令包含<strong>最多一个</strong>命令字、若干关键字和参数，参数必须由参数名和参数值组成。命令字、关键字、参数名、参数值之间用空格分隔开。</p>
+<p>需要注意的是，为了便于用户使用多样的命令，VRP系统将命令注册在了不同的视图下。</p>
+<h2 id="命令行视图"><a href="#命令行视图" class="headerlink" title="命令行视图"></a>命令行视图</h2><p>华为设备的配置、查询命令多样，为了便于使用，VRP系统提供了多个视图 (View)，按功能将命令分别注册在不同的命令行视图下，所有的命令仅对当前视图生效。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/Users/Administrator/Pictures/Typedown/db243608-1c03-4505-9f8e-c99bb4d18d7b.png"
+                      alt="db243608-1c03-4505-9f8e-c99bb4d18d7b"
+                ></p>
+<p>实际上，我们登陆系统后默认进入的视图是用户视图，它的标识为 <Huawei> 。在用户视图中不提供除查询和 ping、telnet 等工具命令之外的其他命令，同时，在用户视图中，唯一可进入的视图是系统视图，使用 system-view 命令进入系统视图。</p>
+<p>系统视图则提供一些简单的全局配置命令，如果系统存在下一级配置视图，则在系统视图中须提供进入下一级配置视图的命令。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/Users/Administrator/Pictures/Typedown/b074225d-3a8e-4852-97bf-116857f032e1.png"
+                      alt="b074225d-3a8e-4852-97bf-116857f032e1"
+                ></p>
+<p>一些接口的配置参数比较多，因此VRP系统提供了接口的配置视图，在系统视图中，使用命令 interface GigabitEthernet X（此处X表示一个具体接口的编号） 进入GE接口配置视图。</p>
+<p>另外，VRP系统规定，一条命令中除参数值外都可以被叫做关键字。在当前视图下，当输入的字符能够匹配唯一关键字时，可以不必输入完整的关键字。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/Users/Administrator/Pictures/Typedown/b0e2d902-0d98-43f8-94f4-7129d170a781.png"
+                      alt="b0e2d902-0d98-43f8-94f4-7129d170a781"
+                ></p>
+<p>我们还可以使用 Tab 键自动补全关键字。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/Users/Administrator/Pictures/Typedown/c1c32082-26da-4c60-b94b-293f37008ab4.png"
+                      alt="c1c32082-26da-4c60-b94b-293f37008ab4"
+                ></p>
+<p>以及获取实时的指令帮助。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/Users/Administrator/Pictures/Typedown/d004882e-6a89-4026-ae5f-f33f71dd7ad7.png"
+                      alt="d004882e-6a89-4026-ae5f-f33f71dd7ad7"
+                ></p>
+<p>解读命令行错误信息。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/Users/Administrator/Pictures/Typedown/40f3b3dc-1816-44e5-ab8e-1e1bb3ef29d6.png"
+                      alt="40f3b3dc-1816-44e5-ab8e-1e1bb3ef29d6"
+                ></p>
+<h2 id="undo-命令行"><a href="#undo-命令行" class="headerlink" title="undo 命令行"></a>undo 命令行</h2><p>在命令前加上undo关键字，即为undo命令行。undo命令行一般用来恢复默认或者删除某项配置。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/Users/Administrator/Pictures/Typedown/6bec25da-103c-4daf-a7e1-f46b096295eb.png"
+                      alt="6bec25da-103c-4daf-a7e1-f46b096295eb"
+                ></p>
+<h2 id="命令行快捷键"><a href="#命令行快捷键" class="headerlink" title="命令行快捷键"></a>命令行快捷键</h2><p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/Users/Administrator/Pictures/Typedown/86dd0061-5b8a-4e88-89a9-de23d57bd3ac.png"
+                      alt="86dd0061-5b8a-4e88-89a9-de23d57bd3ac"
+                ></p>
+<h2 id="常用文件系统操作命令"><a href="#常用文件系统操作命令" class="headerlink" title="常用文件系统操作命令"></a>常用文件系统操作命令</h2><p>VRP系统基于文件系统来管理设备上的文件和目录。在管理文件和目录时，经常会使用一些基本命令来查询文件或者目录的信息。</p>
+<ul>
+<li><p><Huawei> pwd 命令用来显示当前工作目录。</p>
+</li>
+<li><p><Huawei> dir [ &#x2F;all ] [ filename | directory ] 命令用来查看当前目录下的文件信息。</p>
+</li>
+<li><p><Huawei> more [ &#x2F;binary ] filename [ offset ] [ all ] 命令用来查看文本文件的具体内容。▫ 本例中，在用户视图中使用dir命令，可以查看flash中的文件信息。• </p>
+</li>
+<li><p><Huawei> cd directory 命令用来修改用户当前的工作目录。</p>
+</li>
+<li><p><Huawei> mkdir directory 命令能够创建一个新的目录。目录名称可以包含1-64个字符。</p>
+</li>
+<li><p><Huawei> rmdir directory 命令能够删除文件系统中的目录，此处需要注意的是，只有空目录才能被删除。</p>
+</li>
+<li><p><Huawei> copy source-filename destination-filename 命令可以复制文件。如果目标文件已存在，系统会提示此文件将被替换。目标文件名不能与系统启动文件同名，否则系统将会出现错误提示。</p>
+</li>
+<li><p><Huawei> move source-filename destination-filename 命令可以用来将文件移动到其他目录下。move命令只适用于在同一储存设备中移动文件。</p>
+</li>
+<li><p><Huawei> rename old-name new-name 命令可以用来对目录或文件进行重命名。</p>
+</li>
+<li><p><Huawei> delete [ &#x2F;unreserved ] [ &#x2F;force ] { filename | devicename } 命令可以用来删除文件。不带 unreserved 参数的情况下，被删除的文件将直接被移动到回收站。回收站中的文件也可以通过执行 undelete 命令进行恢复，但是如果执行 delete 命令时指定了 unreserved 参数，则文件将被永久删除。在删除文件时，系统会提示“是否确定删除文件”，但如果命令中指定了 &#x2F;force 参数，系统将不会给出任何提示信息。filename 参数指的是需要删除的文件的名称， devicename 参数指定了储存设备的名称。</p>
+</li>
+<li><p><Huawei> reset recycle-bin [ filename | devicename ] 可以用来永久删除回收站中的文件，filename 参数指定了需要永久删除的文件的名称，device-name 参数指定了储存设备的名称。</p>
+</li>
+</ul>
+<h2 id="基本配置命令"><a href="#基本配置命令" class="headerlink" title="基本配置命令"></a>基本配置命令</h2>]]></content>
+      <tags>
+        <tag>Network System Management</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hello World</title>
+    <url>/2023/10/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+]]></content>
   </entry>
 </search>
