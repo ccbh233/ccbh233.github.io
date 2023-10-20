@@ -18,12 +18,12 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="通用路由平台 (Versatile Routing Platform, VRP)通用路由平台是华为设备的通用操作系统平台，网络工程师必须熟练掌握VRP的配置。本文主要介绍CLI界面的使用。 交换机距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。  终端设备网络接入  二层交换（Layer 2 Switching）   命令行界面 (Command Line Interface)V">
+        <meta name="description" content="通用路由平台 (Versatile Routing Platform, VRP)通用路由平台是华为设备的通用操作系统平台，网络工程师必须熟练掌握VRP的配置。本文主要介绍CLI界面的使用。 命令行界面 (Command Line Interface)VRP系统登陆成功后即进入命令行界面，命令行界面是工程师与网络设备进行交互的常用工具。 基本命令结构华为提供的命令按照一定的格式设计，命令行界面提供对">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据通信基础之华为VRP系统">
 <meta property="og:url" content="https://ccbh233.github.io/2023/10/20/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8D%8E%E4%B8%BAVRP%E7%B3%BB%E7%BB%9F/index.html">
 <meta property="og:site_name" content="ITBLOG | CCBH">
-<meta property="og:description" content="通用路由平台 (Versatile Routing Platform, VRP)通用路由平台是华为设备的通用操作系统平台，网络工程师必须熟练掌握VRP的配置。本文主要介绍CLI界面的使用。 交换机距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。  终端设备网络接入  二层交换（Layer 2 Switching）   命令行界面 (Command Line Interface)V">
+<meta property="og:description" content="通用路由平台 (Versatile Routing Platform, VRP)通用路由平台是华为设备的通用操作系统平台，网络工程师必须熟练掌握VRP的配置。本文主要介绍CLI界面的使用。 命令行界面 (Command Line Interface)VRP系统登陆成功后即进入命令行界面，命令行界面是工程师与网络设备进行交互的常用工具。 基本命令结构华为提供的命令按照一定的格式设计，命令行界面提供对">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="file:///C:/Users/Administrator/Pictures/Typedown/167207bf-0047-4d48-bb9e-7f5365fad2f3.png">
 <meta property="og:image" content="file:///C:/Users/Administrator/Pictures/Typedown/b1ac58c3-3474-42a3-adc8-a2dbc5849a5a.png">
@@ -36,9 +36,10 @@
 <meta property="og:image" content="file:///C:/Users/Administrator/Pictures/Typedown/6bec25da-103c-4daf-a7e1-f46b096295eb.png">
 <meta property="og:image" content="file:///C:/Users/Administrator/Pictures/Typedown/86dd0061-5b8a-4e88-89a9-de23d57bd3ac.png">
 <meta property="article:published_time" content="2023-10-20T02:36:50.836Z">
-<meta property="article:modified_time" content="2023-10-20T03:31:17.855Z">
+<meta property="article:modified_time" content="2023-10-20T09:43:15.720Z">
 <meta property="article:author" content="Central China">
-<meta property="article:tag" content="Network System Management">
+<meta property="article:tag" content="Network Engineer">
+<meta property="article:tag" content="HCIA">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="file:///C:/Users/Administrator/Pictures/Typedown/167207bf-0047-4d48-bb9e-7f5365fad2f3.png">
     
@@ -254,8 +255,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-10-20 11:31:17</span>
-            <span class="mobile">2023-10-20 11:31:17</span>
+            <span class="desktop">2023-10-20 17:43:15</span>
+            <span class="mobile">2023-10-20 17:43:15</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -267,7 +268,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/Network-System-Management/">Network System Management</a>&nbsp;
+                        <a href="/tags/Network-Engineer/">Network Engineer</a>&nbsp;
+                    </li>
+                
+                    <li>
+                        | <a href="/tags/HCIA/">HCIA</a>&nbsp;
                     </li>
                 
             </ul>
@@ -294,13 +299,6 @@
 
         <div class="article-content markdown-body">
             <h2 id="通用路由平台-Versatile-Routing-Platform-VRP"><a href="#通用路由平台-Versatile-Routing-Platform-VRP" class="headerlink" title="通用路由平台 (Versatile Routing Platform, VRP)"></a>通用路由平台 (Versatile Routing Platform, VRP)</h2><p>通用路由平台是华为设备的通用操作系统平台，网络工程师必须熟练掌握VRP的配置。本文主要介绍<strong>CLI界面的使用</strong>。</p>
-<h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><p>距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。</p>
-<ul>
-<li><p>终端设备网络接入</p>
-</li>
-<li><p>二层交换（Layer 2 Switching）</p>
-</li>
-</ul>
 <h2 id="命令行界面-Command-Line-Interface"><a href="#命令行界面-Command-Line-Interface" class="headerlink" title="命令行界面 (Command Line Interface)"></a>命令行界面 (Command Line Interface)</h2><p>VRP系统登陆成功后即进入命令行界面，命令行界面是工程师与网络设备进行交互的常用工具。</p>
 <h2 id="基本命令结构"><a href="#基本命令结构" class="headerlink" title="基本命令结构"></a>基本命令结构</h2><p>华为提供的命令按照一定的格式设计，命令行界面提供对命令的解析，实现对设备的配置和管理。</p>
 <p>对于命令系统，华为提供了以下说明：</p>
@@ -385,27 +383,27 @@
                 ></p>
 <h2 id="常用文件系统操作命令"><a href="#常用文件系统操作命令" class="headerlink" title="常用文件系统操作命令"></a>常用文件系统操作命令</h2><p>VRP系统基于文件系统来管理设备上的文件和目录。在管理文件和目录时，经常会使用一些基本命令来查询文件或者目录的信息。</p>
 <ul>
-<li><p><Huawei> pwd 命令用来显示当前工作目录。</p>
+<li><p>&lt;Huawei&gt; pwd 命令用来显示当前工作目录。</p>
 </li>
-<li><p><Huawei> dir [ &#x2F;all ] [ filename | directory ] 命令用来查看当前目录下的文件信息。</p>
+<li><p>&lt;Huawei&gt; dir [ &#x2F;all ] [ filename | directory ] 命令用来查看当前目录下的文件信息。</p>
 </li>
-<li><p><Huawei> more [ &#x2F;binary ] filename [ offset ] [ all ] 命令用来查看文本文件的具体内容。▫ 本例中，在用户视图中使用dir命令，可以查看flash中的文件信息。• </p>
+<li><p>&lt;Huawei&gt; more [ &#x2F;binary ] filename [ offset ] [ all ] 命令用来查看文本文件的具体内容。▫ 本例中，在用户视图中使用dir命令，可以查看flash中的文件信息。• </p>
 </li>
-<li><p><Huawei> cd directory 命令用来修改用户当前的工作目录。</p>
+<li><p>&lt;Huawei&gt; cd directory 命令用来修改用户当前的工作目录。</p>
 </li>
-<li><p><Huawei> mkdir directory 命令能够创建一个新的目录。目录名称可以包含1-64个字符。</p>
+<li><p>&lt;Huawei&gt; mkdir directory 命令能够创建一个新的目录。目录名称可以包含1-64个字符。</p>
 </li>
-<li><p><Huawei> rmdir directory 命令能够删除文件系统中的目录，此处需要注意的是，只有空目录才能被删除。</p>
+<li><p>&lt;Huawei&gt; rmdir directory 命令能够删除文件系统中的目录，此处需要注意的是，只有空目录才能被删除。</p>
 </li>
-<li><p><Huawei> copy source-filename destination-filename 命令可以复制文件。如果目标文件已存在，系统会提示此文件将被替换。目标文件名不能与系统启动文件同名，否则系统将会出现错误提示。</p>
+<li><p>&lt;Huawei&gt; copy source-filename destination-filename 命令可以复制文件。如果目标文件已存在，系统会提示此文件将被替换。目标文件名不能与系统启动文件同名，否则系统将会出现错误提示。</p>
 </li>
-<li><p><Huawei> move source-filename destination-filename 命令可以用来将文件移动到其他目录下。move命令只适用于在同一储存设备中移动文件。</p>
+<li><p>&lt;Huawei&gt; move source-filename destination-filename 命令可以用来将文件移动到其他目录下。move命令只适用于在同一储存设备中移动文件。</p>
 </li>
-<li><p><Huawei> rename old-name new-name 命令可以用来对目录或文件进行重命名。</p>
+<li><p>&lt;Huawei&gt; rename old-name new-name 命令可以用来对目录或文件进行重命名。</p>
 </li>
-<li><p><Huawei> delete [ &#x2F;unreserved ] [ &#x2F;force ] { filename | devicename } 命令可以用来删除文件。不带 unreserved 参数的情况下，被删除的文件将直接被移动到回收站。回收站中的文件也可以通过执行 undelete 命令进行恢复，但是如果执行 delete 命令时指定了 unreserved 参数，则文件将被永久删除。在删除文件时，系统会提示“是否确定删除文件”，但如果命令中指定了 &#x2F;force 参数，系统将不会给出任何提示信息。filename 参数指的是需要删除的文件的名称， devicename 参数指定了储存设备的名称。</p>
+<li><p>&lt;Huawei&gt; delete [ &#x2F;unreserved ] [ &#x2F;force ] { filename | devicename } 命令可以用来删除文件。不带 unreserved 参数的情况下，被删除的文件将直接被移动到回收站。回收站中的文件也可以通过执行 undelete 命令进行恢复，但是如果执行 delete 命令时指定了 unreserved 参数，则文件将被永久删除。在删除文件时，系统会提示“是否确定删除文件”，但如果命令中指定了 &#x2F;force 参数，系统将不会给出任何提示信息。filename 参数指的是需要删除的文件的名称， devicename 参数指定了储存设备的名称。</p>
 </li>
-<li><p><Huawei> reset recycle-bin [ filename | devicename ] 可以用来永久删除回收站中的文件，filename 参数指定了需要永久删除的文件的名称，device-name 参数指定了储存设备的名称。</p>
+<li><p>&lt;Huawei&gt; reset recycle-bin [ filename | devicename ] 可以用来永久删除回收站中的文件，filename 参数指定了需要永久删除的文件的名称，device-name 参数指定了储存设备的名称。</p>
 </li>
 </ul>
 <h2 id="基本配置命令"><a href="#基本配置命令" class="headerlink" title="基本配置命令"></a>基本配置命令</h2>
@@ -422,7 +420,7 @@
         
             <li>
                 <strong>更新于
-                    :</strong> 2023-10-20 11:31:17
+                    :</strong> 2023-10-20 17:43:15
             </li>
         
         <li>
@@ -447,7 +445,11 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/Network-System-Management/">#Network System Management</a>&nbsp;
+                        <a href="/tags/Network-Engineer/">#Network Engineer</a>&nbsp;
+                    </li>
+                
+                    <li class="tag-item">
+                        <a href="/tags/HCIA/">#HCIA</a>&nbsp;
                     </li>
                 
             </ul>
@@ -531,7 +533,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">数据通信基础之华为VRP系统</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E8%B7%AF%E7%94%B1%E5%B9%B3%E5%8F%B0-Versatile-Routing-Platform-VRP"><span class="nav-text">通用路由平台 (Versatile Routing Platform, VRP)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-text">交换机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2-Command-Line-Interface"><span class="nav-text">命令行界面 (Command Line Interface)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%E7%BB%93%E6%9E%84"><span class="nav-text">基本命令结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%86%E5%9B%BE"><span class="nav-text">命令行视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undo-%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="nav-text">undo 命令行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-text">命令行快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">常用文件系统操作命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4"><span class="nav-text">基本配置命令</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%80%9A%E7%94%A8%E8%B7%AF%E7%94%B1%E5%B9%B3%E5%8F%B0-Versatile-Routing-Platform-VRP"><span class="nav-text">通用路由平台 (Versatile Routing Platform, VRP)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E7%95%8C%E9%9D%A2-Command-Line-Interface"><span class="nav-text">命令行界面 (Command Line Interface)</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E5%91%BD%E4%BB%A4%E7%BB%93%E6%9E%84"><span class="nav-text">基本命令结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E8%A7%86%E5%9B%BE"><span class="nav-text">命令行视图</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#undo-%E5%91%BD%E4%BB%A4%E8%A1%8C"><span class="nav-text">undo 命令行</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E4%BB%A4%E8%A1%8C%E5%BF%AB%E6%8D%B7%E9%94%AE"><span class="nav-text">命令行快捷键</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B8%B8%E7%94%A8%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E6%93%8D%E4%BD%9C%E5%91%BD%E4%BB%A4"><span class="nav-text">常用文件系统操作命令</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E6%9C%AC%E9%85%8D%E7%BD%AE%E5%91%BD%E4%BB%A4"><span class="nav-text">基本配置命令</span></a></li></ol>
 
     </div>
 </div>
