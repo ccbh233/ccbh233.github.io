@@ -25,13 +25,16 @@
 <meta property="og:site_name" content="ITBLOG | CCBH">
 <meta property="og:description" content="地址解析协议地址解析协议 (ARP, Address Resolution Protocol)，通俗来讲，ARP就是(基于IP地址)用来获取物理地址即MAC地址的。请求时通过广播(即将数据包发送到局域网内所有主机)的方式发送ARP请求包，然后接收返回的消息，这样就使用IP地址确定了目标的MAC地址。 它是根据IP地址获取物理地址的一个TCP&#x2F;IP协议。主机发送信息时将包含目标IP地址的A">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://ccbh233.github.io/%5Cimages%5CARP_Request_Message.png">
+<meta property="og:image" content="file:///C:/images/arp__a.png">
 <meta property="article:published_time" content="2023-10-24T14:14:02.465Z">
-<meta property="article:modified_time" content="2023-10-24T15:04:14.396Z">
+<meta property="article:modified_time" content="2023-10-24T16:08:00.191Z">
 <meta property="article:author" content="Central China">
 <meta property="article:tag" content="Network Engineer">
 <meta property="article:tag" content="Network Foundation">
 <meta property="article:tag" content="Network System Management">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://ccbh233.github.io/%5Cimages%5CARP_Request_Message.png">
     
     
     <!--- Icon Part-->
@@ -245,8 +248,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-10-24 23:04:14</span>
-            <span class="mobile">2023-10-24 23:04:14</span>
+            <span class="desktop">2023-10-25 00:08</span>
+            <span class="mobile">2023-10-25 00:08</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -293,10 +296,31 @@
 
         <div class="article-content markdown-body">
             <h2 id="地址解析协议"><a href="#地址解析协议" class="headerlink" title="地址解析协议"></a>地址解析协议</h2><p>地址解析协议 (ARP, Address Resolution Protocol)，通俗来讲，ARP就是(<strong>基于IP地址</strong>)用来获取物理地址即MAC地址的。请求时通过<strong>广播</strong>(即将数据包发送到局域网内所有主机)的方式发送ARP请求包，然后接收返回的消息，这样就使用IP地址确定了目标的MAC地址。</p>
-<p>它是根据IP地址获取物理地址的一个TCP&#x2F;IP协议。主机发送信息时将包含目标IP地址的ARP请求广播到局域网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建立在网络中各个主机互相信任的基础上的，局域网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个ARP欺骗。ARP命令可用于查询本机ARP缓存中IP地址和MAC地址的对应关系、添加或删除静态对应关系等。相关协议有RARP、代理ARP。NDP用于在IPv6中代替地址解析协议。</p>
+<p>它是根据IP地址获取物理地址的一个TCP&#x2F;IP协议。主机发送信息时将包含目标IP地址的ARP请求广播到局域网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建立在网络中各个主机互相信任的基础上的，局域网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个ARP欺骗。ARP命令可用于查询本机ARP缓存中IP地址和MAC地址的对应关系、添加或删除静态对应关系等。相关协议有RARP、代理ARP。</p>
 <div class="note info"><p>ARP 只用于 IPv4 协议中，IPv6 协议使用的是 Neighbor Discovery Protocol，译为邻居发现协议，它被纳入 ICMPv6 中。</p>
 </div>
 
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>基本原理就是上面所说，基于IP地址的广播然后接收回复，下面来深入了解一下。</p>
+<p>在局域网中，一般基于MAC地址进行数据包的传输。假设我们第一次搭建好局域网，我们的主机(以下称<strong>A主机</strong>)是如何知道目标主机(以下称<strong>B主机</strong>)的MAC地址的呢？</p>
+<p>上文提到，ARP是基于IP地址来获取MAC地址的，所以A主机首先构造一个ARP请求包，其中ARP请求报文主要包含了源(A主机)的IP地址和MAC地址、目标(B主机)的IP地址和MAC地址，其中，<strong>目标MAC地址使用 00-00-00-00-00-00 填充</strong>。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/%5Cimages%5CARP_Request_Message.png"
+                      alt="loading-ag-144"
+                ></p>
+<p>之后，网络层将包传递到下一层的数据链路层，数据链路层将包的首部添加上目标MAC地址、源MAC地址和帧类型将包封装为帧，其中，<strong>目标MAC地址使用 FF-FF-FF-FF-FF-FF 填充(表示广播地址)<strong>，之后会以广播的形式发送出去，局域网内所有的主机都会受到该数据包。收到该数据包的主机会将该ARP报文内的目标MAC地址与自己的MAC地址进行比对，若不匹配则丢弃该ARP请求包。当B主机收到数据包之后，首先比对MAC地址，发现目标MAC地址与自己的MAC地址相同时，首先将A主机的IP地址和MAC地址的对应关系添加到自己本地ARP缓存表中(下次进行基于MAC地址的数据通信可以直接调用本地ARP表中的MAC地址而不必发送ARP请求来获取MAC地址)，然后B主机将包含其MAC地址的ARP回复消息</strong>直接发送</strong>回A主机，即B主机也构造一个ARP请求包，其中ARP请求报文包含了源(B主机)的IP地址和MAC地址、目标(A主机)的IP地址和MAC地址，然后发送给A主机。当A主机收到B主机发来的ARP应答包时，会将包内B主机的IP和MAC地址的对应关系保存到自己本地ARP缓存，这就完成了一个ARP请求的整个流程。之后，A主机再向B主机发送数据时，会直接使用自己保存的MAC地址与B主机通信而无需再发送ARP请求。通过 ARP 缓存，降低了网络流量的使用并缓解了网络压力，一定程度上防止了 ARP 的大量广播。</p>
+<div class="note info"><p>本地ARP缓存是有生存期(有效期)的，每个动态ARP缓存项的潜在生命周期是10分钟。生存期结束后，需要再次重复上面的过程。静态ARP缓存可以长期保持有效状态。</p>
+</div>
+
+<p>我们可以使用 arp 命令查看本地ARP缓存。在 Windows 系统下，对应 arp -a &#x2F; arp -g 命令。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="file:///C:/images/arp__a.png"
+                      alt="loading-ag-359"
+                ></p>
+<h2 id="ARP应用"><a href="#ARP应用" class="headerlink" title="ARP应用"></a>ARP应用</h2><h2 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h2>
         </div>
 
         
@@ -310,7 +334,7 @@
         
             <li>
                 <strong>更新于
-                    :</strong> 2023-10-24 23:04:14
+                    :</strong> 2023-10-25 00:08:00
             </li>
         
         <li>
@@ -427,7 +451,7 @@
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
         <div class="page-title">数据通信基础之ARP</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90%E5%8D%8F%E8%AE%AE"><span class="nav-text">地址解析协议</span></a></li></ol>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E8%A7%A3%E6%9E%90%E5%8D%8F%E8%AE%AE"><span class="nav-text">地址解析协议</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C%E5%8E%9F%E7%90%86"><span class="nav-text">工作原理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARP%E5%BA%94%E7%94%A8"><span class="nav-text">ARP应用</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ARP%E6%AC%BA%E9%AA%97"><span class="nav-text">ARP欺骗</span></a></li></ol>
 
     </div>
 </div>
