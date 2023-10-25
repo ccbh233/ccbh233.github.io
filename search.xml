@@ -27,8 +27,8 @@
   <entry>
     <title>数据通信基础之ARP</title>
     <url>/2023/10/24/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8BARP/</url>
-    <content><![CDATA[<h2 id="地址解析协议"><a href="#地址解析协议" class="headerlink" title="地址解析协议"></a>地址解析协议</h2><p>地址解析协议 (ARP, Address Resolution Protocol)，通俗来讲，ARP就是(<strong>基于IP地址</strong>)用来获取物理地址即MAC地址的。请求时通过<strong>广播</strong>(即将数据包发送到局域网内所有主机)的方式发送ARP请求包，然后接收返回的消息，这样就使用IP地址确定了目标的MAC地址。</p>
-<p>它是根据IP地址获取物理地址的一个TCP&#x2F;IP协议。主机发送信息时将包含目标IP地址的ARP请求广播到局域网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建立在网络中各个主机互相信任的基础上的，局域网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个ARP欺骗。ARP命令可用于查询本机ARP缓存中IP地址和MAC地址的对应关系、添加或删除静态对应关系等。相关协议有RARP、代理ARP。</p>
+    <content><![CDATA[<h2 id="地址解析协议"><a href="#地址解析协议" class="headerlink" title="地址解析协议"></a>地址解析协议</h2><p>地址解析协议 ( Address Resolution Protocol, ARP ) 是根据IP地址获取物理地址的一个TCP&#x2F;IP协议。主机发送信息时将包含目标IP地址的ARP请求广播到局域网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建立在网络中各个主机互相信任的基础上的，局域网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个ARP欺骗。ARP命令可用于查询本机ARP缓存中IP地址和MAC地址的对应关系、添加或删除静态对应关系等。相关协议有RARP、代理ARP。</p>
+<p>通俗来讲，ARP就是(<strong>基于IP地址</strong>)用来获取物理地址即MAC地址的。请求时通过<strong>广播</strong>(即将数据包发送到局域网内所有主机)的方式发送ARP请求包，然后接收返回的消息，这样就使用IP地址确定了目标的MAC地址。</p>
 <div class="note info"><p>ARP 只用于 IPv4 协议中，IPv6 协议使用的是 Neighbor Discovery Protocol，译为邻居发现协议，它被纳入 ICMPv6 中。</p>
 </div>
 
@@ -41,7 +41,9 @@
                      data-src="/%5Cimages%5CARP_Request_Message.png"
                       alt="loading-ag-144"
                 ></p>
-<p>之后，网络层将包传递到下一层的数据链路层，数据链路层将包的首部添加上目标MAC地址、源MAC地址和帧类型将包封装为帧，其中，<strong>目标MAC地址使用 FF-FF-FF-FF-FF-FF 填充(表示广播地址)<strong>，之后会以广播的形式发送出去，局域网内所有的主机都会受到该数据包。收到该数据包的主机会将该ARP报文内的目标MAC地址与自己的MAC地址进行比对，若不匹配则丢弃该ARP请求包。当B主机收到数据包之后，首先比对MAC地址，发现目标MAC地址与自己的MAC地址相同时，首先将A主机的IP地址和MAC地址的对应关系添加到自己本地ARP缓存表中(下次进行基于MAC地址的数据通信可以直接调用本地ARP表中的MAC地址而不必发送ARP请求来获取MAC地址)，然后B主机将包含其MAC地址的ARP回复消息</strong>直接发送</strong>回A主机，即B主机也构造一个ARP请求包，其中ARP请求报文包含了源(B主机)的IP地址和MAC地址、目标(A主机)的IP地址和MAC地址，然后发送给A主机。当A主机收到B主机发来的ARP应答包时，会将包内B主机的IP和MAC地址的对应关系保存到自己本地ARP缓存，这就完成了一个ARP请求的整个流程。之后，A主机再向B主机发送数据时，会直接使用自己保存的MAC地址与B主机通信而无需再发送ARP请求。通过 ARP 缓存，降低了网络流量的使用并缓解了网络压力，一定程度上防止了 ARP 的大量广播。</p>
+<p>之后，网络层将包传递到下一层的数据链路层，数据链路层将包的首部添加上目标MAC地址、源MAC地址和帧类型将包封装为帧，其中，**目标MAC地址使用 FF-FF-FF-FF-FF-FF 填充(表示广播地址)**，之后会以广播的形式发送出去，局域网内所有的主机都会受到该数据包。收到该数据包的主机会将该ARP报文内的目标MAC地址与自己的MAC地址进行比对，若不匹配则丢弃该ARP请求包。</p>
+<p>当B主机收到数据包之后，首先比对MAC地址，发现目标MAC地址与自己的MAC地址相同时，首先将A主机的IP地址和MAC地址的对应关系添加到自己本地ARP缓存表中(下次进行基于MAC地址的数据通信可以直接调用本地ARP表中的MAC地址而不必发送ARP请求来获取MAC地址)，然后B主机将包含其MAC地址的ARP回复消息<strong>直接发送</strong>回A主机，即B主机也构造一个ARP请求包，其中ARP请求报文包含了源(B主机)的IP地址和MAC地址、目标(A主机)的IP地址和MAC地址，然后发送给A主机。当A主机收到B主机发来的ARP应答包时，会将包内B主机的IP和MAC地址的对应关系保存到自己本地ARP缓存，这就完成了一个ARP请求的整个流程。之后，A主机再向B主机发送数据时，会直接使用自己保存的MAC地址与B主机通信而无需再发送ARP请求。</p>
+<p>通过 ARP 缓存，降低了网络流量的使用并缓解了网络压力，一定程度上防止了 ARP 的大量广播。</p>
 <div class="note info"><p>本地ARP缓存是有生存期(有效期)的，每个动态ARP缓存项的潜在生命周期是10分钟。生存期结束后，需要再次重复上面的过程。静态ARP缓存可以长期保持有效状态。</p>
 </div>
 
@@ -53,6 +55,117 @@
                       alt="loading-ag-359"
                 ></p>
 <h2 id="ARP应用"><a href="#ARP应用" class="headerlink" title="ARP应用"></a>ARP应用</h2><h2 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h2>]]></content>
+      <tags>
+        <tag>Network Engineer</tag>
+        <tag>Network Foundation</tag>
+        <tag>Network System Management</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据通信基础之ARP</title>
+    <url>/2023/10/25/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8BICMP/</url>
+    <content><![CDATA[<h2 id="因特网控制报文协议"><a href="#因特网控制报文协议" class="headerlink" title="因特网控制报文协议"></a>因特网控制报文协议</h2><p>ICMP（Internet Control Message Protocol）Internet控制报文协议。它是TCP&#x2F;IP协议簇的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。ICMP协议是一种面向无连接的网络层协议，对网络的连接状况判断非常有用。另外，ICMP只</p>
+<p>通俗来讲，它用于报告错误，例如，请求的服务不可用或无法访问主机或路由器。在数据传输过程中，IP协议尽可能的保证数据包到达目的地址，但并不对数据包是否到达目的地址进行验证，因此总是会产生各种错误，ICMP应运而生。</p>
+<div class="note-large blue"><div class="notel-title"><p>面向无连接</p>
+</div><div class="notel-content"><p>“面向无连接”是指在通信过程中，发送方和接收方之间不需要建立持久的连接或会话，每个数据包都是独立地处理和传输的。</p>
+<p>在面向无连接的协议中，每个数据包都包含了足够的信息，使得它可以独立地被路由和处理。这种方式可以使得通信更加灵活高效，因为发送方和接收方可以随时开始和停止通信，而不必事先进行连接的建立和释放操作。</p>
+</div></div>
+
+<h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>实际上，ICMP就是一个差错报告机制。当数据包传输过程中出现问题时，ICMP会向源网络设备发送ICMP报文报告这个错误。另外，ICMP只会报告错误，不会修正错误，也不会通知其他设备出现错误。</p>
+<h2 id="ICMP数据包"><a href="#ICMP数据包" class="headerlink" title="ICMP数据包"></a>ICMP数据包</h2><p>ICMP 标头位于 IPv4 和 IPv6 数据包标头之后。</p>
+<p>在 ICMP 数据包格式中，数据包的前 32 位包含三个字段：</p>
+<ul>
+<li><p>类型 (8 位)：数据包的前 8 位是消息类型，它提供了消息的简要描述，以便接收网络知道它正在接收什么样的消息以及如何响应它。一些常见的消息类型如下：</p>
+<ul>
+<li><p>类型 0 – 回显回复</p>
+</li>
+<li><p>类型 3 – 目的地不可达</p>
+</li>
+<li><p>类型 5 – 重定向消息</p>
+</li>
+<li><p>类型 8 – 回显请求</p>
+</li>
+<li><p>类型 11 – 超时</p>
+</li>
+<li><p>类型 12 – 参数问题</p>
+</li>
+</ul>
+</li>
+<li><p>Code (8-bit)：Code是ICMP报文格式的后8位，这个字段携带一些关于错误信息和类型的附加信息。</p>
+</li>
+<li><p>校验和 (16 位)：最后 16 位用于 ICMP 数据包标头中的校验和字段。校验和用于检查完整消息的位数，并启用 ICMP 工具以确保传送完整的数据。</p>
+</li>
+</ul>
+<p>ICMP Header 后面的是32位的 Extended Header，其作用是指出 IP Message 中的问题。字节位置由导致问题消息的指针标识，接收设备在此处查找指向问题的位置。</p>
+<p>ICMP 数据包的最后一部分是可变长度的数据或有效载荷。IPv4 中包含的字节为 576 字节，IPv6 中为 1280 字节。</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="https://pics7.baidu.com/feed/a9d3fd1f4134970a7c1b433f4621e1c4a6865da9.jpeg@f_auto?token=07730c531a2d68399319790f41d87fa0"
+                      alt="ICMP数据包结构"
+                ></p>
+<h2 id="ICMP应用"><a href="#ICMP应用" class="headerlink" title="ICMP应用"></a>ICMP应用</h2><p>ICMP由于其机制而有着比较多的应用。</p>
+<ul>
+<li><p>Ping： 实际上，我们熟悉的Ping命令就是使用 ICMP 进行请求和应答的。Ping是一种简单的跟踪路由，称为 echo-request 消息，用于测量数据到达目的地和返回源所花费的时间，这些回复称为 echo-replies 消息。<br>我们可以抓包来查看 Ping 的工作过程。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/049b3213-0256-4301-95bd-e66ce683fa0b.png"
+                      alt="049b3213-0256-4301-95bd-e66ce683fa0b"
+                ><br>添加过滤。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/7212b296-e7df-475d-9df4-bd876caddd4d.png"
+                      alt="7212b296-e7df-475d-9df4-bd876caddd4d"
+                ><br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/1a2661bc-2545-4998-9460-8d06b2df48b1.png"
+                      alt="1a2661bc-2545-4998-9460-8d06b2df48b1"
+                ></p>
+</li>
+<li><p>Tracert： Tracert 用于了解通过互联网连接的两个设备之间的路由。它将旅程从一个路由器路由到另一个路由器，并执行跟踪路由以在数据传输之前检查网络问题。<br><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/65f8032f-250c-401e-84b3-0e034449bcea.png"
+                      alt="65f8032f-250c-401e-84b3-0e034449bcea"
+                ></p>
+</li>
+</ul>
+<h2 id="PING返回值解析"><a href="#PING返回值解析" class="headerlink" title="PING返回值解析"></a>PING返回值解析</h2><p>我们在使用Ping命令时总是会收到各种各样的返回信心，有超时、有无法访问等等。只有我们理解了Ping的返回信息，才能更好的进行网络故障检测与修正。</p>
+<p>我的网络配置是这样的</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/6da92391-f115-433a-9d33-568324f95834.png"
+                      alt="6da92391-f115-433a-9d33-568324f95834"
+                ></p>
+<p>正常情况下，Ping命令返回是这样的</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/2ae58bf7-2fcd-4639-ac3e-b21b6060fa63.png"
+                      alt="2ae58bf7-2fcd-4639-ac3e-b21b6060fa63"
+                ></p>
+<p>现在我们分别 Ping 10.154.250.250 和 Ping 10.155.250.250 ，会出现什么返回呢？</p>
+<p>向 10.154.250.250 发送Ping请求时返回是这样的</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/1bc1bb97-d17b-4c68-b950-474e9eb2e414.png"
+                      alt="1bc1bb97-d17b-4c68-b950-474e9eb2e414"
+                ></p>
+<p>向 10.155.250.250 发送Ping请求时返回是这样的</p>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="/images/6bc0d444-bd65-4ab7-b422-f20ee7891d72.png"
+                      alt="6bc0d444-bd65-4ab7-b422-f20ee7891d72"
+                ></p>
+<p>发现了吗，一个返回无法访问目标主机，一个返回请求超时，那么为什么会出现两种不一样的返回？</p>
+<p>注意到 10.154.250.250 和 10.155.250.250 都是私网地址，我们的IP地址为 10.154.58.14 ，而 10.154.250.250 与我们是同一网段， 10.155.250.250 与我们不在同一网段。上文(<a href="https://ccbh233.github.io/2023/10/24/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8BARP/">数据通信基础之ARP</a>)在介绍ARP时就已经说过，在局域网内进行通信时一般使用MAC地址进行通信。</p>
+<p>Ping 10.154.250.250 时，由于我的主机没有 10.154.250.250 的地址，因此会先发送ARP广播请求 10.154.250.250 的MAC地址，但是因为没有主机回应它，因此我的主机迟迟不能获得 10.154.250.250 的MAC地址，于是返回“无法访问目标主机”的错误信息。</p>
+<p>Ping 10.155.250.250 时，由于目标与我的主机不是同一网段，于是使用ICMP协议，构建一个回送请求(echo request)数据包。之后，查询网关的MAC地址，如果已经在ARP缓存表中找到了网关的MAC地址，那么就直接使用它；如果没有找到，那么就发送一个ARP请求广播，等待网关回复一个ARP应答，告知它的MAC地址。然后将ICMP数据包封装在一个以太网帧中，其中目的MAC地址是网关的MAC地址。网关收到这个帧后，会检查MAC地址是否和自己匹配。匹配则根据目标IP地址进行路由选择。若网关知道如何到达目标IP地址就将ICMP数据包转发给下一跳，若不知道就返回一个ICMP目标不可达(destination unreachable)数据包。</p>
+]]></content>
       <tags>
         <tag>Network Engineer</tag>
         <tag>Network Foundation</tag>
@@ -177,55 +290,6 @@
       </tags>
   </entry>
   <entry>
-    <title>数据通信基础之网络设备</title>
-    <url>/2023/10/20/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8B%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/</url>
-    <content><![CDATA[<h2 id="数据通信网络"><a href="#数据通信网络" class="headerlink" title="数据通信网络"></a>数据通信网络</h2><p>数据通信网络是由路由器、交换机、防火墙、无线控制器、无线接入点，以及个人电脑、网络打印机、服务器等设备构成的通信网络，其最最基本的功能是<strong>实现数据互通</strong>。</p>
-<h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><p>距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。</p>
-<ul>
-<li><p>终端设备网络接入</p>
-</li>
-<li><p>二层交换（Layer 2 Switching）</p>
-</li>
-</ul>
-<h2 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h2><p><strong>网络层设备</strong>，可在因特网中进行数据报文转发。为数据报文选择一条合适的路径使之能到达目的地址，此即为路由。路由器根据所收到的报文的目的地址将报文传送到下一个路由器或目的地，路径中最后的路由器负责将报文送交目的主机。</p>
-<ul>
-<li><p>实现同类型网络或异种网络之间的通信</p>
-</li>
-<li><p>隔离广播域</p>
-</li>
-<li><p>维护路由表（Routing Table）、运行路由协议</p>
-</li>
-<li><p>路径（路由信息）选择、IP报文转发</p>
-</li>
-<li><p>广域网接入、网络地址转换</p>
-</li>
-<li><p>连接通过交换机组建的二层网络</p>
-</li>
-</ul>
-<h2 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h2><p>网络安全设备，用于控制两个网络之间的安全通信。它通过监测、限制、更改跨越防火墙的数据流，尽可能地对外部屏蔽网络内部的信息、结构和运行状况，以此来实现对网络的安全保护。</p>
-<ul>
-<li><p>隔离不同安全级别的网络</p>
-</li>
-<li><p>实现不同安全级别网络间的访问控制（安全策略）</p>
-</li>
-<li><p>用户身份认证</p>
-</li>
-<li><p>实现远程接入功能</p>
-</li>
-<li><p>实现数据加密及虚拟专用网业务</p>
-</li>
-<li><p>执行网络地址转换</p>
-</li>
-<li><p>其他安全功能</p>
-</li>
-</ul>
-<h2 id="无线设备"><a href="#无线设备" class="headerlink" title="无线设备"></a>无线设备</h2>]]></content>
-      <tags>
-        <tag>Network Engineer</tag>
-        <tag>Network System Management</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>网络基础之以太网</title>
     <url>/2023/10/20/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BB%A5%E5%A4%AA%E7%BD%91/</url>
     <content><![CDATA[<h2 id="以太网"><a href="#以太网" class="headerlink" title="以太网"></a>以太网</h2><p>以太网（Ethernet）是一种计算机局域网技术，说白了就是局域网，IEEE组织的 IEEE 802.3 标准制定了以太网的技术标准规定了包括物理层的连线、电子信号和介质访问层协议的内容。</p>
@@ -276,6 +340,55 @@
 ]]></content>
       <tags>
         <tag>Network Foundation</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>数据通信基础之网络设备</title>
+    <url>/2023/10/20/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8B%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/</url>
+    <content><![CDATA[<h2 id="数据通信网络"><a href="#数据通信网络" class="headerlink" title="数据通信网络"></a>数据通信网络</h2><p>数据通信网络是由路由器、交换机、防火墙、无线控制器、无线接入点，以及个人电脑、网络打印机、服务器等设备构成的通信网络，其最最基本的功能是<strong>实现数据互通</strong>。</p>
+<h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><p>距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。</p>
+<ul>
+<li><p>终端设备网络接入</p>
+</li>
+<li><p>二层交换（Layer 2 Switching）</p>
+</li>
+</ul>
+<h2 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h2><p><strong>网络层设备</strong>，可在因特网中进行数据报文转发。为数据报文选择一条合适的路径使之能到达目的地址，此即为路由。路由器根据所收到的报文的目的地址将报文传送到下一个路由器或目的地，路径中最后的路由器负责将报文送交目的主机。</p>
+<ul>
+<li><p>实现同类型网络或异种网络之间的通信</p>
+</li>
+<li><p>隔离广播域</p>
+</li>
+<li><p>维护路由表（Routing Table）、运行路由协议</p>
+</li>
+<li><p>路径（路由信息）选择、IP报文转发</p>
+</li>
+<li><p>广域网接入、网络地址转换</p>
+</li>
+<li><p>连接通过交换机组建的二层网络</p>
+</li>
+</ul>
+<h2 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h2><p>网络安全设备，用于控制两个网络之间的安全通信。它通过监测、限制、更改跨越防火墙的数据流，尽可能地对外部屏蔽网络内部的信息、结构和运行状况，以此来实现对网络的安全保护。</p>
+<ul>
+<li><p>隔离不同安全级别的网络</p>
+</li>
+<li><p>实现不同安全级别网络间的访问控制（安全策略）</p>
+</li>
+<li><p>用户身份认证</p>
+</li>
+<li><p>实现远程接入功能</p>
+</li>
+<li><p>实现数据加密及虚拟专用网业务</p>
+</li>
+<li><p>执行网络地址转换</p>
+</li>
+<li><p>其他安全功能</p>
+</li>
+</ul>
+<h2 id="无线设备"><a href="#无线设备" class="headerlink" title="无线设备"></a>无线设备</h2>]]></content>
+      <tags>
+        <tag>Network Engineer</tag>
+        <tag>Network System Management</tag>
       </tags>
   </entry>
 </search>
