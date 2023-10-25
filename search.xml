@@ -51,10 +51,11 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="file:///C:/images/arp__a.png"
+                     data-src="/%5Cimages%5Carp__a.png"
                       alt="loading-ag-359"
                 ></p>
-<h2 id="ARP应用"><a href="#ARP应用" class="headerlink" title="ARP应用"></a>ARP应用</h2><h2 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h2>]]></content>
+<h2 id="ARP应用"><a href="#ARP应用" class="headerlink" title="ARP应用"></a>ARP应用</h2><h2 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h2><p>ARP请求是以广播的形式发送给所有主机的，所以每个主机有选择发送ARP应答消息的自主权，并且当其他主机收到应答报文时不会检测该报文的真实性就将其记录在本地的MAC表中，这样攻击者就可以向目标主机发送伪ARP应答报文，从而篡改本地的MAC地址表。ARP欺骗会导致目标计算机与网关通信失败，更会导致通信重定向，所有的数据都会通过攻击者的机器，因此存在极大的安全隐患。</p>
+]]></content>
       <tags>
         <tag>Network Engineer</tag>
         <tag>Network Foundation</tag>
@@ -62,7 +63,7 @@
       </tags>
   </entry>
   <entry>
-    <title>数据通信基础之ARP</title>
+    <title>数据通信基础之ICMP</title>
     <url>/2023/10/25/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8BICMP/</url>
     <content><![CDATA[<h2 id="因特网控制报文协议"><a href="#因特网控制报文协议" class="headerlink" title="因特网控制报文协议"></a>因特网控制报文协议</h2><p>ICMP（Internet Control Message Protocol）Internet控制报文协议。它是TCP&#x2F;IP协议簇的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。ICMP协议是一种面向无连接的网络层协议，对网络的连接状况判断非常有用。另外，ICMP只</p>
 <p>通俗来讲，它用于报告错误，例如，请求的服务不可用或无法访问主机或路由器。在数据传输过程中，IP协议尽可能的保证数据包到达目的地址，但并不对数据包是否到达目的地址进行验证，因此总是会产生各种错误，ICMP应运而生。</p>
@@ -101,8 +102,8 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="https://pics7.baidu.com/feed/a9d3fd1f4134970a7c1b433f4621e1c4a6865da9.jpeg@f_auto?token=07730c531a2d68399319790f41d87fa0"
-                      alt="ICMP数据包结构"
+                     data-src="file:///C:/images/ICMP__packet__structure.jpg"
+                      alt="loading-ag-171"
                 ></p>
 <h2 id="ICMP应用"><a href="#ICMP应用" class="headerlink" title="ICMP应用"></a>ICMP应用</h2><p>ICMP由于其机制而有着比较多的应用。</p>
 <ul>
@@ -290,6 +291,55 @@
       </tags>
   </entry>
   <entry>
+    <title>数据通信基础之网络设备</title>
+    <url>/2023/10/20/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8B%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/</url>
+    <content><![CDATA[<h2 id="数据通信网络"><a href="#数据通信网络" class="headerlink" title="数据通信网络"></a>数据通信网络</h2><p>数据通信网络是由路由器、交换机、防火墙、无线控制器、无线接入点，以及个人电脑、网络打印机、服务器等设备构成的通信网络，其最最基本的功能是<strong>实现数据互通</strong>。</p>
+<h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><p>距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。</p>
+<ul>
+<li><p>终端设备网络接入</p>
+</li>
+<li><p>二层交换（Layer 2 Switching）</p>
+</li>
+</ul>
+<h2 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h2><p><strong>网络层设备</strong>，可在因特网中进行数据报文转发。为数据报文选择一条合适的路径使之能到达目的地址，此即为路由。路由器根据所收到的报文的目的地址将报文传送到下一个路由器或目的地，路径中最后的路由器负责将报文送交目的主机。</p>
+<ul>
+<li><p>实现同类型网络或异种网络之间的通信</p>
+</li>
+<li><p>隔离广播域</p>
+</li>
+<li><p>维护路由表（Routing Table）、运行路由协议</p>
+</li>
+<li><p>路径（路由信息）选择、IP报文转发</p>
+</li>
+<li><p>广域网接入、网络地址转换</p>
+</li>
+<li><p>连接通过交换机组建的二层网络</p>
+</li>
+</ul>
+<h2 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h2><p>网络安全设备，用于控制两个网络之间的安全通信。它通过监测、限制、更改跨越防火墙的数据流，尽可能地对外部屏蔽网络内部的信息、结构和运行状况，以此来实现对网络的安全保护。</p>
+<ul>
+<li><p>隔离不同安全级别的网络</p>
+</li>
+<li><p>实现不同安全级别网络间的访问控制（安全策略）</p>
+</li>
+<li><p>用户身份认证</p>
+</li>
+<li><p>实现远程接入功能</p>
+</li>
+<li><p>实现数据加密及虚拟专用网业务</p>
+</li>
+<li><p>执行网络地址转换</p>
+</li>
+<li><p>其他安全功能</p>
+</li>
+</ul>
+<h2 id="无线设备"><a href="#无线设备" class="headerlink" title="无线设备"></a>无线设备</h2>]]></content>
+      <tags>
+        <tag>Network Engineer</tag>
+        <tag>Network System Management</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>网络基础之以太网</title>
     <url>/2023/10/20/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BB%A5%E5%A4%AA%E7%BD%91/</url>
     <content><![CDATA[<h2 id="以太网"><a href="#以太网" class="headerlink" title="以太网"></a>以太网</h2><p>以太网（Ethernet）是一种计算机局域网技术，说白了就是局域网，IEEE组织的 IEEE 802.3 标准制定了以太网的技术标准规定了包括物理层的连线、电子信号和介质访问层协议的内容。</p>
@@ -340,55 +390,6 @@
 ]]></content>
       <tags>
         <tag>Network Foundation</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>数据通信基础之网络设备</title>
-    <url>/2023/10/20/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8B%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/</url>
-    <content><![CDATA[<h2 id="数据通信网络"><a href="#数据通信网络" class="headerlink" title="数据通信网络"></a>数据通信网络</h2><p>数据通信网络是由路由器、交换机、防火墙、无线控制器、无线接入点，以及个人电脑、网络打印机、服务器等设备构成的通信网络，其最最基本的功能是<strong>实现数据互通</strong>。</p>
-<h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><p>距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。</p>
-<ul>
-<li><p>终端设备网络接入</p>
-</li>
-<li><p>二层交换（Layer 2 Switching）</p>
-</li>
-</ul>
-<h2 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h2><p><strong>网络层设备</strong>，可在因特网中进行数据报文转发。为数据报文选择一条合适的路径使之能到达目的地址，此即为路由。路由器根据所收到的报文的目的地址将报文传送到下一个路由器或目的地，路径中最后的路由器负责将报文送交目的主机。</p>
-<ul>
-<li><p>实现同类型网络或异种网络之间的通信</p>
-</li>
-<li><p>隔离广播域</p>
-</li>
-<li><p>维护路由表（Routing Table）、运行路由协议</p>
-</li>
-<li><p>路径（路由信息）选择、IP报文转发</p>
-</li>
-<li><p>广域网接入、网络地址转换</p>
-</li>
-<li><p>连接通过交换机组建的二层网络</p>
-</li>
-</ul>
-<h2 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h2><p>网络安全设备，用于控制两个网络之间的安全通信。它通过监测、限制、更改跨越防火墙的数据流，尽可能地对外部屏蔽网络内部的信息、结构和运行状况，以此来实现对网络的安全保护。</p>
-<ul>
-<li><p>隔离不同安全级别的网络</p>
-</li>
-<li><p>实现不同安全级别网络间的访问控制（安全策略）</p>
-</li>
-<li><p>用户身份认证</p>
-</li>
-<li><p>实现远程接入功能</p>
-</li>
-<li><p>实现数据加密及虚拟专用网业务</p>
-</li>
-<li><p>执行网络地址转换</p>
-</li>
-<li><p>其他安全功能</p>
-</li>
-</ul>
-<h2 id="无线设备"><a href="#无线设备" class="headerlink" title="无线设备"></a>无线设备</h2>]]></content>
-      <tags>
-        <tag>Network Engineer</tag>
-        <tag>Network System Management</tag>
       </tags>
   </entry>
 </search>

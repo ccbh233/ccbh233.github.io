@@ -26,9 +26,9 @@
 <meta property="og:description" content="地址解析协议地址解析协议 ( Address Resolution Protocol, ARP ) 是根据IP地址获取物理地址的一个TCP&#x2F;IP协议。主机发送信息时将包含目标IP地址的ARP请求广播到局域网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ccbh233.github.io/%5Cimages%5CARP_Request_Message.png">
-<meta property="og:image" content="file:///C:/images/arp__a.png">
+<meta property="og:image" content="https://ccbh233.github.io/%5Cimages%5Carp__a.png">
 <meta property="article:published_time" content="2023-10-24T14:14:02.465Z">
-<meta property="article:modified_time" content="2023-10-25T00:59:26.970Z">
+<meta property="article:modified_time" content="2023-10-25T06:59:23.238Z">
 <meta property="article:author" content="Central China">
 <meta property="article:tag" content="Network Engineer">
 <meta property="article:tag" content="Network Foundation">
@@ -248,8 +248,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-10-25 08:59:26</span>
-            <span class="mobile">2023-10-25 08:59:26</span>
+            <span class="desktop">2023-10-25 14:59:23</span>
+            <span class="mobile">2023-10-25 14:59:23</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -319,10 +319,11 @@
 <p><img  
                      lazyload
                      src="/images/loading.svg"
-                     data-src="file:///C:/images/arp__a.png"
+                     data-src="/%5Cimages%5Carp__a.png"
                       alt="loading-ag-359"
                 ></p>
-<h2 id="ARP应用"><a href="#ARP应用" class="headerlink" title="ARP应用"></a>ARP应用</h2><h2 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h2>
+<h2 id="ARP应用"><a href="#ARP应用" class="headerlink" title="ARP应用"></a>ARP应用</h2><h2 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h2><p>ARP请求是以广播的形式发送给所有主机的，所以每个主机有选择发送ARP应答消息的自主权，并且当其他主机收到应答报文时不会检测该报文的真实性就将其记录在本地的MAC表中，这样攻击者就可以向目标主机发送伪ARP应答报文，从而篡改本地的MAC地址表。ARP欺骗会导致目标计算机与网关通信失败，更会导致通信重定向，所有的数据都会通过攻击者的机器，因此存在极大的安全隐患。</p>
+
         </div>
 
         
@@ -336,7 +337,7 @@
         
             <li>
                 <strong>更新于
-                    :</strong> 2023-10-25 08:59:26
+                    :</strong> 2023-10-25 14:59:23
             </li>
         
         <li>
@@ -389,7 +390,7 @@
                                 <i class="fa-solid fa-chevron-left"></i>
                             </span>
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">数据通信基础之ARP</span>
+                                <span class="post-nav-title-item">数据通信基础之ICMP</span>
                                 <span class="post-nav-item">上一篇</span>
                             </span>
                         </a>
