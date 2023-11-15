@@ -13,24 +13,23 @@
     
     <!--- Seo Part-->
     
-    <link rel="canonical" href="https://ccbh233.github.io/2023/10/20/数据通信基础之网络设备/"/>
+    <link rel="canonical" href="https://ccbh233.github.io/2023/11/15/网络基础之vlan/"/>
     <meta name="robots" content="index,follow">
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="数据通信网络数据通信网络是由路由器、交换机、防火墙、无线控制器、无线接入点，以及个人电脑、网络打印机、服务器等设备构成的通信网络，其最最基本的功能是实现数据互通。 交换机距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。  终端设备网络接入  二层交换（Layer 2 Switching）   路由器网络层设备，可在因特网中进行数据报文转发。为数据报文选择一条合适的路径使之能到达目">
+        <meta name="description" content="以太网以太网（Ethernet）是一种计算机局域网技术，说白了就是局域网，IEEE组织的 IEEE 802.3 标准制定了以太网的技术标准规定了包括物理层的连线、电子信号和介质访问层协议的内容。 以太网分为经典以太网和交换式以太网两类，其中交换式以太网又有快速以太网、千兆以太网和万兆以太网的形式。 经典以太网经典以太网使用一根长电缆连接所有计算机。以太网有电缆最大长度限制，超过这个范围信号将无法传">
 <meta property="og:type" content="article">
-<meta property="og:title" content="数据通信基础之网络设备">
-<meta property="og:url" content="https://ccbh233.github.io/2023/10/20/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8B%E7%BD%91%E7%BB%9C%E8%AE%BE%E5%A4%87/index.html">
+<meta property="og:title" content="网络基础之以太网">
+<meta property="og:url" content="https://ccbh233.github.io/2023/11/15/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8BVLAN/index.html">
 <meta property="og:site_name" content="ITBLOG | CCBH">
-<meta property="og:description" content="数据通信网络数据通信网络是由路由器、交换机、防火墙、无线控制器、无线接入点，以及个人电脑、网络打印机、服务器等设备构成的通信网络，其最最基本的功能是实现数据互通。 交换机距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。  终端设备网络接入  二层交换（Layer 2 Switching）   路由器网络层设备，可在因特网中进行数据报文转发。为数据报文选择一条合适的路径使之能到达目">
+<meta property="og:description" content="以太网以太网（Ethernet）是一种计算机局域网技术，说白了就是局域网，IEEE组织的 IEEE 802.3 标准制定了以太网的技术标准规定了包括物理层的连线、电子信号和介质访问层协议的内容。 以太网分为经典以太网和交换式以太网两类，其中交换式以太网又有快速以太网、千兆以太网和万兆以太网的形式。 经典以太网经典以太网使用一根长电缆连接所有计算机。以太网有电缆最大长度限制，超过这个范围信号将无法传">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-10-20T01:44:25.243Z">
-<meta property="article:modified_time" content="2023-10-25T08:29:42.919Z">
+<meta property="article:published_time" content="2023-11-14T23:49:31.725Z">
+<meta property="article:modified_time" content="2023-10-25T08:29:50.317Z">
 <meta property="article:author" content="Central China">
-<meta property="article:tag" content="Network Engineer">
+<meta property="article:tag" content="Network Foundation">
 <meta property="article:tag" content="HCIA">
-<meta property="article:tag" content="Network System Management">
 <meta name="twitter:card" content="summary">
     
     
@@ -43,7 +42,7 @@
     
     <title>
         
-            数据通信基础之网络设备 -
+            网络基础之以太网 -
         
         CCBH’s blog
     </title>
@@ -216,7 +215,7 @@
 
         <div class="article-title">
             
-                <h1 class="article-title-regular">数据通信基础之网络设备</h1>
+                <h1 class="article-title-regular">网络基础之以太网</h1>
             
             </div>
             
@@ -238,15 +237,15 @@
                         <div class="article-meta-info">
     <span class="article-date article-meta-item">
         <i class="fa-regular fa-pen-fancy"></i>&nbsp;
-        <span class="desktop">2023-10-20 09:44:25</span>
-        <span class="mobile">2023-10-20 09:44:25</span>
+        <span class="desktop">2023-11-15 07:49:31</span>
+        <span class="mobile">2023-11-15 07:49:31</span>
         <span class="hover-info">创建</span>
     </span>
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-10-25 16:29:42</span>
-            <span class="mobile">2023-10-25 16:29:42</span>
+            <span class="desktop">2023-10-25 16:29:50</span>
+            <span class="mobile">2023-10-25 16:29:50</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -258,15 +257,11 @@
             <ul>
                 
                     <li>
-                        <a href="/tags/Network-Engineer/">Network Engineer</a>&nbsp;
+                        <a href="/tags/Network-Foundation/">Network Foundation</a>&nbsp;
                     </li>
                 
                     <li>
                         | <a href="/tags/HCIA/">HCIA</a>&nbsp;
-                    </li>
-                
-                    <li>
-                        | <a href="/tags/Network-System-Management/">Network System Management</a>&nbsp;
                     </li>
                 
             </ul>
@@ -292,65 +287,67 @@
 
 
         <div class="article-content markdown-body">
-            <h2 id="数据通信网络"><a href="#数据通信网络" class="headerlink" title="数据通信网络"></a>数据通信网络</h2><p>数据通信网络是由路由器、交换机、防火墙、无线控制器、无线接入点，以及个人电脑、网络打印机、服务器等设备构成的通信网络，其最最基本的功能是<strong>实现数据互通</strong>。</p>
-<h2 id="交换机"><a href="#交换机" class="headerlink" title="交换机"></a>交换机</h2><p>距离终端用户最近的设备，用于终端用户接入网络、对数据帧进行交换等。</p>
-<ul>
-<li><p>终端设备网络接入</p>
+            <h2 id="以太网"><a href="#以太网" class="headerlink" title="以太网"></a>以太网</h2><p>以太网（Ethernet）是一种计算机局域网技术，说白了就是局域网，IEEE组织的 IEEE 802.3 标准制定了以太网的技术标准规定了包括物理层的连线、电子信号和介质访问层协议的内容。</p>
+<p>以太网分为经典以太网和交换式以太网两类，其中交换式以太网又有快速以太网、千兆以太网和万兆以太网的形式。</p>
+<h3 id="经典以太网"><a href="#经典以太网" class="headerlink" title="经典以太网"></a>经典以太网</h3><p>经典以太网使用一根长电缆连接所有计算机。以太网有电缆最大长度限制，超过这个范围信号将无法传播（可以使用物理层设备比如中继器放大、重发信号），信息的发送使用曼彻斯特编码。</p>
+<p>经典以太网使用 1-坚持 CSMA&#x2F;CD 算法。</p>
+<p>由于其使用一个长电缆连接所有电脑，所以当以太网规模大时，出现故障很难定位到故障位置。</p>
+<h3 id="交换式以太网"><a href="#交换式以太网" class="headerlink" title="交换式以太网"></a>交换式以太网</h3><p>交换式以太网的核心是一个交换机（相当于不会发生信号冲突的集线器）。交换机只把帧输出到该帧想去的端口，通过简单的插入或者拔出电缆就能完成添加或者删除一台机器。如果出现问题，尝试更换一台交换机就能解决问题。</p>
+<h3 id="载波侦听多路访问"><a href="#载波侦听多路访问" class="headerlink" title="载波侦听多路访问"></a>载波侦听多路访问</h3><p>CSMA（Carrier Sense Multiple Access，载波侦听多路访问）是一种常见的访问协议，用于在共享媒体上进行数据传输。它被广泛应用于以太网等局域网和广域网中。</p>
+<p>CSMA协议的基本原理是，在发送数据之前，设备会先侦听网络上是否有其他设备正在发送数据。如果检测到有其他设备在发送数据，当前设备会等待一段时间，直到网络空闲为止。一旦网络空闲，设备才会开始发送数据。</p>
+<div class="note info"><p>CSMA协议仅依靠”载波侦听”的机制来判断网络是否处于忙碌状态。如果设备在发送数据之前侦听到了载波信号，即表示网络正在被占用，设备会等待一段时间再尝试发送。然而，由于多个设备可能同时开始发送数据，这就可能导致碰撞（collision）的问题。当多个设备在同一时间尝试发送数据时，它们的信号会相互干扰，导致数据损坏。</p>
+</div>
+
+<p>通过CSMA协议，设备可以按照一定的规则共享网络资源，避免数据冲突和碰撞，从而提高网络的传输效率和公平性。随着技术的进步，CSMA协议也发展出了不同的变体，如非坚持CSMA、1-坚持CSMA等，以满足不同场景下的需求。</p>
+<p>在网络负载较重的情况下。CSMA仍然会发生数据碰撞。而 CSMA&#x2F;CD 在发送数据之前不仅会侦听网络，而且还会检测网络上是否存在碰撞信号。如果存在碰撞，则会立即停止发送数据，并通过特殊的反馈机制（反弹，发送信号加强冲突）通知网络中的其他计算机停止发送数据。计算机之间将等待随机时间，然后重新尝试发送数据。</p>
+<p>在发送帧之前，先监听信道（载波），若信道空闲则将帧完整发送出去，若信道忙则推迟发送。</p>
+<div class="note-large blue"><div class="notel-title"><p>载波侦听多路访问</p>
+</div><div class="notel-content"><ul>
+<li><p>1-坚持CSMA<br>信道忙不能发送数据帧时，开始一直监听信道，一旦发现信道空闲马上发送数据。</p>
 </li>
-<li><p>二层交换（Layer 2 Switching）</p>
+<li><p>非坚持CSMA<br>信道忙不能发送数据帧时，不立即监听信道，而是随机等待一段时间后再侦听信道。</p>
 </li>
-</ul>
-<h2 id="路由器"><a href="#路由器" class="headerlink" title="路由器"></a>路由器</h2><p><strong>网络层设备</strong>，可在因特网中进行数据报文转发。为数据报文选择一条合适的路径使之能到达目的地址，此即为路由。路由器根据所收到的报文的目的地址将报文传送到下一个路由器或目的地，路径中最后的路由器负责将报文送交目的主机。</p>
-<ul>
-<li><p>实现同类型网络或异种网络之间的通信</p>
-</li>
-<li><p>隔离广播域</p>
-</li>
-<li><p>维护路由表（Routing Table）、运行路由协议</p>
-</li>
-<li><p>路径（路由信息）选择、IP报文转发</p>
-</li>
-<li><p>广域网接入、网络地址转换</p>
-</li>
-<li><p>连接通过交换机组建的二层网络</p>
-</li>
-</ul>
-<h2 id="防火墙"><a href="#防火墙" class="headerlink" title="防火墙"></a>防火墙</h2><p>网络安全设备，用于控制两个网络之间的安全通信。它通过监测、限制、更改跨越防火墙的数据流，尽可能地对外部屏蔽网络内部的信息、结构和运行状况，以此来实现对网络的安全保护。</p>
-<ul>
-<li><p>隔离不同安全级别的网络</p>
-</li>
-<li><p>实现不同安全级别网络间的访问控制（安全策略）</p>
-</li>
-<li><p>用户身份认证</p>
-</li>
-<li><p>实现远程接入功能</p>
-</li>
-<li><p>实现数据加密及虚拟专用网业务</p>
-</li>
-<li><p>执行网络地址转换</p>
-</li>
-<li><p>其他安全功能</p>
+<li><p>P-坚持CSMA<br>有P的几率执行 1-坚持CSMA 的方案，有1-P的几率执行 非坚持CSMA 的方案。</p>
 </li>
 </ul>
-<h2 id="无线设备"><a href="#无线设备" class="headerlink" title="无线设备"></a>无线设备</h2>
+</div></div>
+
+<p>实际上，这三种协议在发生冲突后还是会坚持把数据帧发送完，往往造成资源浪费。</p>
+<h3 id="载波侦听多路访问与冲突检测"><a href="#载波侦听多路访问与冲突检测" class="headerlink" title="载波侦听多路访问与冲突检测"></a>载波侦听多路访问与冲突检测</h3><p>CSMA&#x2F;CD（Carrier Sense Multiple Access with Collision Detection，载波侦听多路访问与冲突检测）是一种用于以太网等局域网中的访问协议。</p>
+<p>CSMA&#x2F;CD协议扩展了基本的CSMA协议，增加了冲突检测机制。它的基本原理如下：</p>
+<ul>
+<li><p>载波侦听（Carrier Sense）：设备在发送数据之前，会侦听网络上是否有其他设备正在发送数据。如果检测到载波信号，表示网络正在被占用，设备会等待。</p>
+</li>
+<li><p>冲突检测（Collision Detection）：当一个设备开始发送数据后，它会继续侦听网络，以检测是否有其他设备也在发送数据。如果发现与自己发送的数据冲突（即多个设备同时发送导致干扰），设备会立即停止发送，并发送一个干扰信号给其他设备，以通知它们发生了冲突。</p>
+</li>
+<li><p>退避算法（Backoff Algorithm）：当冲突发生后，参与冲突的设备会等待一段随机的时间，然后再次尝试发送数据。这个随机的退避时间能够降低碰撞的概率，增加发送成功的机会。如果多次重试后仍然发生冲突，设备会停止发送并报告发送失败。</p>
+</li>
+</ul>
+<p>通过CSMA&#x2F;CD协议，多个设备可以共享同一以太网媒体进行数据传输。当冲突发生时，协议能够迅速检测到并采取相应的措施（比如停止发送数据帧），以减少数据冲突以及资源浪费。</p>
+<div class="note-large red"><div class="notel-title"><p>先听后发为什么还会冲突</p>
+</div><div class="notel-content"><p>因为电磁波的传播速率有限。</p>
+</div></div>
+
+<p>当重传达16次仍不成功时便认为此帧永远无法正确发出，抛弃此帧并向高层报错。</p>
+
         </div>
 
         
             <div class="post-copyright-info">
                 <div class="article-copyright-info-container">
     <ul>
-        <li><strong>标题:</strong> 数据通信基础之网络设备</li>
+        <li><strong>标题:</strong> 网络基础之以太网</li>
         <li><strong>作者:</strong> Central China</li>
         <li><strong>创建于
-                :</strong> 2023-10-20 09:44:25</li>
+                :</strong> 2023-11-15 07:49:31</li>
         
             <li>
                 <strong>更新于
-                    :</strong> 2023-10-25 16:29:42
+                    :</strong> 2023-10-25 16:29:50
             </li>
         
         <li>
-            <strong>链接:</strong> https://ccbh233.github.io/2023/10/20/数据通信基础之网络设备/
+            <strong>链接:</strong> https://ccbh233.github.io/2023/11/15/网络基础之VLAN/
         </li>
         <li>
             <strong>
@@ -371,15 +368,11 @@
             <ul class="post-tags-box">
                 
                     <li class="tag-item">
-                        <a href="/tags/Network-Engineer/">#Network Engineer</a>&nbsp;
+                        <a href="/tags/Network-Foundation/">#Network Foundation</a>&nbsp;
                     </li>
                 
                     <li class="tag-item">
                         <a href="/tags/HCIA/">#HCIA</a>&nbsp;
-                    </li>
-                
-                    <li class="tag-item">
-                        <a href="/tags/Network-System-Management/">#Network System Management</a>&nbsp;
                     </li>
                 
             </ul>
@@ -393,13 +386,13 @@
                     <div class="article-prev">
                         <a class="prev"
                         rel="prev"
-                        href="/2023/10/20/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8D%8E%E4%B8%BAVRP%E7%B3%BB%E7%BB%9F/"
+                        href="/2023/11/15/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/"
                         >
                             <span class="left arrow-icon flex justify-center items-center">
                                 <i class="fa-solid fa-chevron-left"></i>
                             </span>
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">数据通信基础之华为VRP系统</span>
+                                <span class="post-nav-title-item">网络基础之OSPF</span>
                                 <span class="post-nav-item">上一篇</span>
                             </span>
                         </a>
@@ -409,10 +402,10 @@
                     <div class="article-next">
                         <a class="next"
                         rel="next"
-                        href="/2023/10/19/First-Blog-Page/"
+                        href="/2023/10/25/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8BICMP/"
                         >
                             <span class="title flex justify-center items-center">
-                                <span class="post-nav-title-item">First Blog Page</span>
+                                <span class="post-nav-title-item">数据通信基础之ICMP</span>
                                 <span class="post-nav-item">下一篇</span>
                             </span>
                             <span class="right arrow-icon flex justify-center items-center">
@@ -477,8 +470,8 @@
             <div class="post-toc-wrap">
     <div class="post-toc">
         <div class="toc-title">此页目录</div>
-        <div class="page-title">数据通信基础之网络设备</div>
-        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E7%BD%91%E7%BB%9C"><span class="nav-text">数据通信网络</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E6%9C%BA"><span class="nav-text">交换机</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%B7%AF%E7%94%B1%E5%99%A8"><span class="nav-text">路由器</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%98%B2%E7%81%AB%E5%A2%99"><span class="nav-text">防火墙</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%97%A0%E7%BA%BF%E8%AE%BE%E5%A4%87"><span class="nav-text">无线设备</span></a></li></ol>
+        <div class="page-title">网络基础之以太网</div>
+        <ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">以太网</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%8F%E5%85%B8%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">经典以太网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BA%A4%E6%8D%A2%E5%BC%8F%E4%BB%A5%E5%A4%AA%E7%BD%91"><span class="nav-text">交换式以太网</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%BD%E6%B3%A2%E4%BE%A6%E5%90%AC%E5%A4%9A%E8%B7%AF%E8%AE%BF%E9%97%AE"><span class="nav-text">载波侦听多路访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%BD%E6%B3%A2%E4%BE%A6%E5%90%AC%E5%A4%9A%E8%B7%AF%E8%AE%BF%E9%97%AE%E4%B8%8E%E5%86%B2%E7%AA%81%E6%A3%80%E6%B5%8B"><span class="nav-text">载波侦听多路访问与冲突检测</span></a></li></ol></li></ol>
 
     </div>
 </div>

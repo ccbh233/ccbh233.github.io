@@ -3,21 +3,21 @@
   <entry>
     <title>数据通信基础之ARP</title>
     <url>/2023/10/24/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8BARP/</url>
-    <content><![CDATA[<h2 id="地址解析协议"><a href="#地址解析协议" class="headerlink" title="地址解析协议"></a>地址解析协议</h2><p>地址解析协议 ( Address Resolution Protocol, ARP ) 是根据IP地址获取物理地址的一个TCP&#x2F;IP协议。主机发送信息时将包含目标IP地址的ARP请求广播到局域网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建立在网络中各个主机互相信任的基础上的，局域网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个ARP欺骗。ARP命令可用于查询本机ARP缓存中IP地址和MAC地址的对应关系、添加或删除静态对应关系等。相关协议有RARP、代理ARP。</p>
+    <content><![CDATA[<h2 id="地址解析协议"><a href="#地址解析协议" class="headerlink" title="地址解析协议"></a>地址解析协议</h2><p>地址解析协议 ( Address Resolution Protocol, ARP ) ，是根据IP地址获取物理地址的一个TCP&#x2F;IP协议。主机发送信息时将包含目标IP地址的ARP请求广播到局域网络上的所有主机，并接收返回消息，以此确定目标的物理地址；收到返回消息后将该IP地址和物理地址存入本机ARP缓存中并保留一定时间，下次请求时直接查询ARP缓存以节约资源。地址解析协议是建立在网络中各个主机互相信任的基础上的，局域网络上的主机可以自主发送ARP应答消息，其他主机收到应答报文时不会检测该报文的真实性就会将其记入本机ARP缓存；由此攻击者就可以向某一主机发送伪ARP应答报文，使其发送的信息无法到达预期的主机或到达错误的主机，这就构成了一个ARP欺骗。ARP命令可用于查询本机ARP缓存中IP地址和MAC地址的对应关系、添加或删除静态对应关系等。相关协议有RARP、代理ARP。</p>
 <p>通俗来讲，ARP就是(<strong>基于IP地址</strong>)用来获取物理地址即MAC地址的。请求时通过<strong>广播</strong>(即将数据包发送到局域网内所有主机)的方式发送ARP请求包，然后接收返回的消息，这样就使用IP地址确定了目标的MAC地址。</p>
 <div class="note info"><p>ARP 只用于 IPv4 协议中，IPv6 协议使用的是 Neighbor Discovery Protocol，译为邻居发现协议，它被纳入 ICMPv6 中。</p>
 </div>
 
 <h2 id="工作原理"><a href="#工作原理" class="headerlink" title="工作原理"></a>工作原理</h2><p>基本原理就是上面所说，基于IP地址的广播然后接收回复，下面来深入了解一下。</p>
 <p>在局域网中，一般基于MAC地址进行数据包的传输。假设我们第一次搭建好局域网，我们的主机(以下称<strong>A主机</strong>)是如何知道目标主机(以下称<strong>B主机</strong>)的MAC地址的呢？</p>
-<p>上文提到，ARP是基于IP地址来获取MAC地址的，所以A主机首先构造一个ARP请求包，其中ARP请求报文主要包含了源(A主机)的IP地址和MAC地址、目标(B主机)的IP地址和MAC地址，其中，<strong>目标MAC地址使用 00-00-00-00-00-00 填充</strong>。</p>
+<p>上文提到，ARP是基于IP地址来获取MAC地址的，所以A主机首先构造一个ARP请求包，其中ARP请求报文主要包含了源(A主机)的IP地址和MAC地址、目标(B主机)的IP地址和MAC地址，其中，<strong>目标MAC地址使用 FF-FF-FF-FF-FF 填充</strong>。</p>
 <p><img  
                      lazyload
                      src="/images/loading.svg"
                      data-src="/images/ARP_Request_Message.png"
                       alt="loading-ag-144"
                 ></p>
-<p>之后，网络层将包传递到下一层的数据链路层，数据链路层将包的首部添加上目标MAC地址、源MAC地址和帧类型将包封装为帧，其中，**目标MAC地址使用 FF-FF-FF-FF-FF-FF 填充(表示广播地址)**，之后会以广播的形式发送出去，局域网内所有的主机都会受到该数据包。收到该数据包的主机会将该ARP报文内的目标MAC地址与自己的MAC地址进行比对，若不匹配则丢弃该ARP请求包。</p>
+<p>之后，以广播的形式发送出去，局域网内所有的主机都会受到该数据包。收到该数据包的主机会将该ARP报文内的目标MAC地址与自己的MAC地址进行比对，若不匹配则丢弃该ARP请求包。</p>
 <p>当B主机收到数据包之后，首先比对MAC地址，发现目标MAC地址与自己的MAC地址相同时，首先将A主机的IP地址和MAC地址的对应关系添加到自己本地ARP缓存表中(下次进行基于MAC地址的数据通信可以直接调用本地ARP表中的MAC地址而不必发送ARP请求来获取MAC地址)，然后B主机将包含其MAC地址的ARP回复消息<strong>直接发送</strong>回A主机，即B主机也构造一个ARP请求包，其中ARP请求报文包含了源(B主机)的IP地址和MAC地址、目标(A主机)的IP地址和MAC地址，然后发送给A主机。当A主机收到B主机发来的ARP应答包时，会将包内B主机的IP和MAC地址的对应关系保存到自己本地ARP缓存，这就完成了一个ARP请求的整个流程。之后，A主机再向B主机发送数据时，会直接使用自己保存的MAC地址与B主机通信而无需再发送ARP请求。</p>
 <p>通过 ARP 缓存，降低了网络流量的使用并缓解了网络压力，一定程度上防止了 ARP 的大量广播。</p>
 <div class="note info"><p>本地ARP缓存是有生存期(有效期)的，每个动态ARP缓存项的潜在生命周期是10分钟。生存期结束后，需要再次重复上面的过程。静态ARP缓存可以长期保持有效状态。</p>
@@ -31,11 +31,11 @@
                       alt="loading-ag-359"
                 ></p>
 <h2 id="ARP应用"><a href="#ARP应用" class="headerlink" title="ARP应用"></a>ARP应用</h2><h2 id="ARP欺骗"><a href="#ARP欺骗" class="headerlink" title="ARP欺骗"></a>ARP欺骗</h2><p>ARP请求是以广播的形式发送给所有主机的，所以每个主机有选择发送ARP应答消息的自主权，并且当其他主机收到应答报文时不会检测该报文的真实性就将其记录在本地的MAC表中，这样攻击者就可以向目标主机发送伪ARP应答报文，从而篡改本地的MAC地址表。ARP欺骗会导致目标计算机与网关通信失败，更会导致通信重定向，所有的数据都会通过攻击者的机器，因此存在极大的安全隐患。</p>
-]]></content>
+<h2 id="免费ARP"><a href="#免费ARP" class="headerlink" title="免费ARP"></a>免费ARP</h2><h2 id="代理ARP"><a href="#代理ARP" class="headerlink" title="代理ARP"></a>代理ARP</h2>]]></content>
       <tags>
         <tag>Network Engineer</tag>
         <tag>Network Foundation</tag>
-        <tag>Network System Management</tag>
+        <tag>HCIA</tag>
       </tags>
   </entry>
   <entry>
@@ -45,9 +45,27 @@
 ]]></content>
   </entry>
   <entry>
+    <title>Hello World</title>
+    <url>/2023/10/19/hello-world/</url>
+    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.</p>
+<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
+
+<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>数据通信基础之ICMP</title>
     <url>/2023/10/25/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8BICMP/</url>
-    <content><![CDATA[<h2 id="因特网控制报文协议"><a href="#因特网控制报文协议" class="headerlink" title="因特网控制报文协议"></a>因特网控制报文协议</h2><p>ICMP（Internet Control Message Protocol）Internet控制报文协议。它是TCP&#x2F;IP协议簇的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。ICMP协议是一种面向无连接的网络层协议，对网络的连接状况判断非常有用。另外，ICMP只</p>
+    <content><![CDATA[<h2 id="因特网控制报文协议"><a href="#因特网控制报文协议" class="headerlink" title="因特网控制报文协议"></a>因特网控制报文协议</h2><p>因特网控制报文协议 ( Internet Control Message Protocol, ICMP ) ，是TCP&#x2F;IP协议簇的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。ICMP协议是一种面向无连接的网络层协议，对网络的连接状况判断非常有用。另外，ICMP只</p>
 <p>通俗来讲，它用于报告错误，例如，请求的服务不可用或无法访问主机或路由器。在数据传输过程中，IP协议尽可能的保证数据包到达目的地址，但并不对数据包是否到达目的地址进行验证，因此总是会产生各种错误，ICMP应运而生。</p>
 <div class="note-large blue"><div class="notel-title"><p>面向无连接</p>
 </div><div class="notel-content"><p>“面向无连接”是指在通信过程中，发送方和接收方之间不需要建立持久的连接或会话，每个数据包都是独立地处理和传输的。</p>
@@ -147,31 +165,13 @@
 <p>发现了吗，一个返回无法访问目标主机，一个返回请求超时，那么为什么会出现两种不一样的返回？</p>
 <p>注意到 10.154.250.250 和 10.155.250.250 都是私网地址，我们的IP地址为 10.154.58.14 ，而 10.154.250.250 与我们是同一网段， 10.155.250.250 与我们不在同一网段。上文(<a href="https://ccbh233.github.io/2023/10/24/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8BARP/">数据通信基础之ARP</a>)在介绍ARP时就已经说过，在局域网内进行通信时一般使用MAC地址进行通信。</p>
 <p>Ping 10.154.250.250 时，由于我的主机没有 10.154.250.250 的地址，因此会先发送ARP广播请求 10.154.250.250 的MAC地址，但是因为没有主机回应它，因此我的主机迟迟不能获得 10.154.250.250 的MAC地址，于是返回“无法访问目标主机”的错误信息。</p>
-<p>Ping 10.155.250.250 时，由于目标与我的主机不是同一网段，于是使用ICMP协议，构建一个回送请求(echo request)数据包。之后，查询网关的MAC地址，如果已经在ARP缓存表中找到了网关的MAC地址，那么就直接使用它；如果没有找到，那么就发送一个ARP请求广播，等待网关回复一个ARP应答，告知它的MAC地址。然后将ICMP数据包封装在一个以太网帧中，其中目的MAC地址是网关的MAC地址。网关收到这个帧后，会检查MAC地址是否和自己匹配。匹配则根据目标IP地址进行路由选择。若网关知道如何到达目标IP地址就将ICMP数据包转发给下一跳，若不知道就返回一个ICMP目标不可达(destination unreachable)数据包。</p>
+<p>Ping 10.155.250.250 时，由于目标与我的主机不是同一网段，于是使用ICMP协议，构建一个回送请求(echo request)数据包。之后，查询网关的MAC地址，如果已经在ARP缓存表中找到了网关的MAC地址，那么就直接使用它；如果没有找到，那么就发送一个ARP请求广播，等待网关回复一个ARP应答，告知它的MAC地址。然后将ICMP数据包封装在一个以太网帧中，其中目的MAC地址是网关的MAC地址。网关收到这个帧后，会检查MAC地址是否和自己匹配。匹配则根据目标IP地址进行路由选择。若网关知道如何到达目标IP地址就将ICMP数据包转发给下一跳，若不知道就返回一个ICMP目标不可达(destination unreachable)数据包，丢弃该数据包。</p>
 ]]></content>
       <tags>
         <tag>Network Engineer</tag>
         <tag>Network Foundation</tag>
-        <tag>Network System Management</tag>
+        <tag>HCIA</tag>
       </tags>
-  </entry>
-  <entry>
-    <title>Hello World</title>
-    <url>/2023/10/19/hello-world/</url>
-    <content><![CDATA[<p>Welcome to <a class="link"   href="https://hexo.io/" >Hexo <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>! This is your very first post. Check <a class="link"   href="https://hexo.io/docs/" >documentation <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> for more info. If you get any problems when using Hexo, you can find the answer in <a class="link"   href="https://hexo.io/docs/troubleshooting.html" >troubleshooting <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a> or you can ask me on <a class="link"   href="https://github.com/hexojs/hexo/issues" >GitHub <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/writing.html" >Writing <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/server.html" >Server <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/generating.html" >Generating <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><div class="highlight-container" data-rel="Bash"><figure class="iseeu highlight bash"><table><tr><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure></div>
-
-<p>More info: <a class="link"   href="https://hexo.io/docs/one-command-deployment.html" >Deployment <i class="fa-regular fa-arrow-up-right-from-square fa-sm"></i></a></p>
-]]></content>
   </entry>
   <entry>
     <title>数据通信基础之华为VRP系统</title>
@@ -292,7 +292,7 @@
   </entry>
   <entry>
     <title>网络基础之以太网</title>
-    <url>/2023/10/20/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BB%A5%E5%A4%AA%E7%BD%91/</url>
+    <url>/2023/11/15/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8BMSTP/</url>
     <content><![CDATA[<h2 id="以太网"><a href="#以太网" class="headerlink" title="以太网"></a>以太网</h2><p>以太网（Ethernet）是一种计算机局域网技术，说白了就是局域网，IEEE组织的 IEEE 802.3 标准制定了以太网的技术标准规定了包括物理层的连线、电子信号和介质访问层协议的内容。</p>
 <p>以太网分为经典以太网和交换式以太网两类，其中交换式以太网又有快速以太网、千兆以太网和万兆以太网的形式。</p>
 <h3 id="经典以太网"><a href="#经典以太网" class="headerlink" title="经典以太网"></a>经典以太网</h3><p>经典以太网使用一根长电缆连接所有计算机。以太网有电缆最大长度限制，超过这个范围信号将无法传播（可以使用物理层设备比如中继器放大、重发信号），信息的发送使用曼彻斯特编码。</p>
@@ -309,14 +309,11 @@
 <p>在发送帧之前，先监听信道（载波），若信道空闲则将帧完整发送出去，若信道忙则推迟发送。</p>
 <div class="note-large blue"><div class="notel-title"><p>载波侦听多路访问</p>
 </div><div class="notel-content"><ul>
-<li><p>1-坚持CSMA</p>
-<p>信道忙不能发送数据帧时，开始一直监听信道，一旦发现信道空闲马上发送数据。</p>
+<li><p>1-坚持CSMA<br>信道忙不能发送数据帧时，开始一直监听信道，一旦发现信道空闲马上发送数据。</p>
 </li>
-<li><p>非坚持CSMA</p>
-<p>信道忙不能发送数据帧时，不立即监听信道，而是随机等待一段时间后再侦听信道。</p>
+<li><p>非坚持CSMA<br>信道忙不能发送数据帧时，不立即监听信道，而是随机等待一段时间后再侦听信道。</p>
 </li>
-<li><p>P-坚持CSMA</p>
-<p>有P的几率执行 1-坚持CSMA 的方案，有1-P的几率执行 非坚持CSMA 的方案。</p>
+<li><p>P-坚持CSMA<br>有P的几率执行 1-坚持CSMA 的方案，有1-P的几率执行 非坚持CSMA 的方案。</p>
 </li>
 </ul>
 </div></div>
@@ -341,6 +338,7 @@
 ]]></content>
       <tags>
         <tag>Network Foundation</tag>
+        <tag>HCIA</tag>
       </tags>
   </entry>
   <entry>
@@ -389,7 +387,403 @@
 <h2 id="无线设备"><a href="#无线设备" class="headerlink" title="无线设备"></a>无线设备</h2>]]></content>
       <tags>
         <tag>Network Engineer</tag>
+        <tag>HCIA</tag>
         <tag>Network System Management</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络基础之以太网</title>
+    <url>/2023/11/15/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8BRSTP/</url>
+    <content><![CDATA[<h2 id="以太网"><a href="#以太网" class="headerlink" title="以太网"></a>以太网</h2><p>以太网（Ethernet）是一种计算机局域网技术，说白了就是局域网，IEEE组织的 IEEE 802.3 标准制定了以太网的技术标准规定了包括物理层的连线、电子信号和介质访问层协议的内容。</p>
+<p>以太网分为经典以太网和交换式以太网两类，其中交换式以太网又有快速以太网、千兆以太网和万兆以太网的形式。</p>
+<h3 id="经典以太网"><a href="#经典以太网" class="headerlink" title="经典以太网"></a>经典以太网</h3><p>经典以太网使用一根长电缆连接所有计算机。以太网有电缆最大长度限制，超过这个范围信号将无法传播（可以使用物理层设备比如中继器放大、重发信号），信息的发送使用曼彻斯特编码。</p>
+<p>经典以太网使用 1-坚持 CSMA&#x2F;CD 算法。</p>
+<p>由于其使用一个长电缆连接所有电脑，所以当以太网规模大时，出现故障很难定位到故障位置。</p>
+<h3 id="交换式以太网"><a href="#交换式以太网" class="headerlink" title="交换式以太网"></a>交换式以太网</h3><p>交换式以太网的核心是一个交换机（相当于不会发生信号冲突的集线器）。交换机只把帧输出到该帧想去的端口，通过简单的插入或者拔出电缆就能完成添加或者删除一台机器。如果出现问题，尝试更换一台交换机就能解决问题。</p>
+<h3 id="载波侦听多路访问"><a href="#载波侦听多路访问" class="headerlink" title="载波侦听多路访问"></a>载波侦听多路访问</h3><p>CSMA（Carrier Sense Multiple Access，载波侦听多路访问）是一种常见的访问协议，用于在共享媒体上进行数据传输。它被广泛应用于以太网等局域网和广域网中。</p>
+<p>CSMA协议的基本原理是，在发送数据之前，设备会先侦听网络上是否有其他设备正在发送数据。如果检测到有其他设备在发送数据，当前设备会等待一段时间，直到网络空闲为止。一旦网络空闲，设备才会开始发送数据。</p>
+<div class="note info"><p>CSMA协议仅依靠”载波侦听”的机制来判断网络是否处于忙碌状态。如果设备在发送数据之前侦听到了载波信号，即表示网络正在被占用，设备会等待一段时间再尝试发送。然而，由于多个设备可能同时开始发送数据，这就可能导致碰撞（collision）的问题。当多个设备在同一时间尝试发送数据时，它们的信号会相互干扰，导致数据损坏。</p>
+</div>
+
+<p>通过CSMA协议，设备可以按照一定的规则共享网络资源，避免数据冲突和碰撞，从而提高网络的传输效率和公平性。随着技术的进步，CSMA协议也发展出了不同的变体，如非坚持CSMA、1-坚持CSMA等，以满足不同场景下的需求。</p>
+<p>在网络负载较重的情况下。CSMA仍然会发生数据碰撞。而 CSMA&#x2F;CD 在发送数据之前不仅会侦听网络，而且还会检测网络上是否存在碰撞信号。如果存在碰撞，则会立即停止发送数据，并通过特殊的反馈机制（反弹，发送信号加强冲突）通知网络中的其他计算机停止发送数据。计算机之间将等待随机时间，然后重新尝试发送数据。</p>
+<p>在发送帧之前，先监听信道（载波），若信道空闲则将帧完整发送出去，若信道忙则推迟发送。</p>
+<div class="note-large blue"><div class="notel-title"><p>载波侦听多路访问</p>
+</div><div class="notel-content"><ul>
+<li><p>1-坚持CSMA<br>信道忙不能发送数据帧时，开始一直监听信道，一旦发现信道空闲马上发送数据。</p>
+</li>
+<li><p>非坚持CSMA<br>信道忙不能发送数据帧时，不立即监听信道，而是随机等待一段时间后再侦听信道。</p>
+</li>
+<li><p>P-坚持CSMA<br>有P的几率执行 1-坚持CSMA 的方案，有1-P的几率执行 非坚持CSMA 的方案。</p>
+</li>
+</ul>
+</div></div>
+
+<p>实际上，这三种协议在发生冲突后还是会坚持把数据帧发送完，往往造成资源浪费。</p>
+<h3 id="载波侦听多路访问与冲突检测"><a href="#载波侦听多路访问与冲突检测" class="headerlink" title="载波侦听多路访问与冲突检测"></a>载波侦听多路访问与冲突检测</h3><p>CSMA&#x2F;CD（Carrier Sense Multiple Access with Collision Detection，载波侦听多路访问与冲突检测）是一种用于以太网等局域网中的访问协议。</p>
+<p>CSMA&#x2F;CD协议扩展了基本的CSMA协议，增加了冲突检测机制。它的基本原理如下：</p>
+<ul>
+<li><p>载波侦听（Carrier Sense）：设备在发送数据之前，会侦听网络上是否有其他设备正在发送数据。如果检测到载波信号，表示网络正在被占用，设备会等待。</p>
+</li>
+<li><p>冲突检测（Collision Detection）：当一个设备开始发送数据后，它会继续侦听网络，以检测是否有其他设备也在发送数据。如果发现与自己发送的数据冲突（即多个设备同时发送导致干扰），设备会立即停止发送，并发送一个干扰信号给其他设备，以通知它们发生了冲突。</p>
+</li>
+<li><p>退避算法（Backoff Algorithm）：当冲突发生后，参与冲突的设备会等待一段随机的时间，然后再次尝试发送数据。这个随机的退避时间能够降低碰撞的概率，增加发送成功的机会。如果多次重试后仍然发生冲突，设备会停止发送并报告发送失败。</p>
+</li>
+</ul>
+<p>通过CSMA&#x2F;CD协议，多个设备可以共享同一以太网媒体进行数据传输。当冲突发生时，协议能够迅速检测到并采取相应的措施（比如停止发送数据帧），以减少数据冲突以及资源浪费。</p>
+<div class="note-large red"><div class="notel-title"><p>先听后发为什么还会冲突</p>
+</div><div class="notel-content"><p>因为电磁波的传播速率有限。</p>
+</div></div>
+
+<p>当重传达16次仍不成功时便认为此帧永远无法正确发出，抛弃此帧并向高层报错。</p>
+]]></content>
+      <tags>
+        <tag>Network Foundation</tag>
+        <tag>HCIA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络基础之OSPF</title>
+    <url>/2023/11/15/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8BOSPF/</url>
+    <content><![CDATA[<h2 id="开放路径最短优先"><a href="#开放路径最短优先" class="headerlink" title="开放路径最短优先"></a>开放路径最短优先</h2><p>开放式最短路径优先 ( Open Shortest Path First, OSPF ) ，是一种动态路由协议，因其出色的表现，目前被广泛使用。</p>
+<h3 id="OSPF-基础"><a href="#OSPF-基础" class="headerlink" title="OSPF 基础"></a>OSPF 基础</h3><h4 id="Router-ID"><a href="#Router-ID" class="headerlink" title="Router ID"></a>Router ID</h4><p>相当（但不同）于路由器的名字，用来标识路由器。<strong>每个路由器都不能相同</strong>。</p>
+<h4 id="Area"><a href="#Area" class="headerlink" title="Area"></a>Area</h4><p>区域是从逻辑上将设备划分为不同的组，每个组用区域号 ( Area ID ) 标识。</p>
+<p>OSPF 的区域 ID 是一个 32 Bit 无符号整数。他有两种表示方法：</p>
+<ul>
+<li><p>十进制：Area 1</p>
+</li>
+<li><p>点分十进制：Area 0.0.0.1</p>
+</li>
+</ul>
+<p>两种表示方式等价。</p>
+<h4 id="路由器类型"><a href="#路由器类型" class="headerlink" title="路由器类型"></a>路由器类型</h4><ul>
+<li><p>骨干路由器 ( Backbone Router, BR ) ：至少有一个接口属于骨干区域。</p>
+</li>
+<li><p>区域内路由器 ( Internal Router, IR ) ：所有接口都属于同一个区域。</p>
+</li>
+<li><p>区域边界路由器 ( Area Border Router, ABR ) ：有接口在骨干区域，有接口在非骨干区域。</p>
+</li>
+<li><p>自治系统边界路由器 ( AS Boundary Router, ASBR ) ：引入外部路由信息。</p>
+</li>
+</ul>
+<h4 id="报文类型"><a href="#报文类型" class="headerlink" title="报文类型"></a>报文类型</h4><ul>
+<li><p>Hello：周期性发送，用来<strong>发现</strong>和维护邻居关系。</p>
+</li>
+<li><p>Data base Description ( DD, DBD ) ：描述本地LSDB ( Link State Database ) 的摘要信息，便于两台设备进行数据库同步。</p>
+</li>
+<li><p>Link State Request ( LSR ) ：邻居关系建立后，用于向对方请求所需 LSA。</p>
+</li>
+<li><p>Link State Update ( LSU ) ：用于向对方发送 LSA，即回复对方的 LSR 请求。</p>
+</li>
+<li><p>Link State Acknowledgment ( LSAck ) ：用于对收到的 LSA 进行确认。</p>
+</li>
+</ul>
+<h4 id="邻居状态"><a href="#邻居状态" class="headerlink" title="邻居状态"></a>邻居状态</h4><p>在 OSPF 中，邻居关系和邻接关系是两个不同的概念。</p>
+<ul>
+<li><p>邻居 ( Neighbors ) ：OSPF 启动后，会通过 OSPF 接口本地所有运行 OSPD 协议的设备以组播 ( 224.0.0.5 ) 的形式发送 Hello 报文以告知自己的存在。如果设备接收到了来自对方的 Hello 报文，且根据报文判断条件满足，则建立邻居关系，并将所有邻居关系记录到<strong>邻居表</strong>中。Hello 报文中携带本身 RID 与自身邻居的 RID。</p>
+</li>
+<li><p>邻接 ( Adjacencies ) ：建立邻居关系后，若条件不满足深入关系的建立条件，则两台设备稳定在邻居关系，双方周期发送 Hello 报文保活。若条件满足，则开始建立邻接关系。</p>
+</li>
+</ul>
+<p>邻居状态和邻接状态是通过 OSPF 状态机表现的，OSPF 共有 8 种邻居状态机。</p>
+<ul>
+<li><p>Down：初始状态。</p>
+</li>
+<li><p><del>Attempt</del>：对端在邻居失效时间间隔 ( Dead Interval ) 超时前未回复本端发送的 Hello 报文时进入此状态。此状态下，路由器依然每发送轮询 Hello 报文的时间间隔 ( Poll Interval ) 向对端发送 Hello 报文。该状态仅发生在 NBMA 网络中。</p>
+</li>
+<li><p>Init：收到 Hello 报文后进入此状态。</p>
+</li>
+<li><p>2 - Way：收到的 Hello 报文中包含有自己的 RID，则进入此状态，同时标志邻居关系建立。若不需要形成邻接关系则稳定在此状态。</p>
+</li>
+<li><p>Exstart：进入 2 - Way 状态后若需要形成邻接关系则进入此状态。开始协商主从关系并确定 DD 报文序列号。</p>
+</li>
+<li><p>Exchange：主从关系协商完后进入此状态，开始交换 DD 报文。</p>
+</li>
+<li><p>Loading：DD 报文交换完成后进入此状态。</p>
+</li>
+<li><p>Full：LSR 重传列表为空后稳定在此状态。</p>
+</li>
+</ul>
+<h4 id="网络类型"><a href="#网络类型" class="headerlink" title="网络类型"></a>网络类型</h4><p>OSPF 网络类型是一个非常重要的接口变量，这个变量将影响 OSPF 在接口上的操作，例如采用什么方式发送OSPF协议报文，以及是否需要选举 DR、BDR 等，接口默认的OSPF网络类型取决于接口所使用的数据链路层封装，OSPF 支持4种网络类型。</p>
+<ul>
+<li>P2P ( Point-to-Point, 点到点 )</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="E:\web\ccbh233.github.io\source\images\OSPF_P2P.png"
+                      alt="OSPF_P2P"
+                ></p>
+<ul>
+<li>P2MP ( Point to Multi-Point, 点到多点 )</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Administrator\Pictures\Screenshots\OSPF_P2MP.png"
+                      alt="OSPF_P2MP"
+                ></p>
+<ul>
+<li>BMA ( Broadcast Multiple Access, 广播式多路访问 )</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="E:\web\ccbh233.github.io\source\images\OSPF-BMA.png"
+                      alt="OSPF-BMA"
+                ></p>
+<ul>
+<li>NBMA ( Non-Broadcast Multiple Access, 非广播式多路访问 )</li>
+</ul>
+<p><img  
+                     lazyload
+                     src="/images/loading.svg"
+                     data-src="C:\Users\Administrator\Pictures\Screenshots\OSPF_NBMA.png"
+                      alt="OSPF_NBMA"
+                ></p>
+<h3 id="载波侦听多路访问"><a href="#载波侦听多路访问" class="headerlink" title="载波侦听多路访问"></a>载波侦听多路访问</h3><p>CSMA（Carrier Sense Multiple Access，载波侦听多路访问）是一种常见的访问协议，用于在共享媒体上进行数据传输。它被广泛应用于以太网等局域网和广域网中。</p>
+<p>CSMA协议的基本原理是，在发送数据之前，设备会先侦听网络上是否有其他设备正在发送数据。如果检测到有其他设备在发送数据，当前设备会等待一段时间，直到网络空闲为止。一旦网络空闲，设备才会开始发送数据。</p>
+<div class="note info"><p>CSMA协议仅依靠”载波侦听”的机制来判断网络是否处于忙碌状态。如果设备在发送数据之前侦听到了载波信号，即表示网络正在被占用，设备会等待一段时间再尝试发送。然而，由于多个设备可能同时开始发送数据，这就可能导致碰撞（collision）的问题。当多个设备在同一时间尝试发送数据时，它们的信号会相互干扰，导致数据损坏。</p>
+</div>
+
+<p>通过CSMA协议，设备可以按照一定的规则共享网络资源，避免数据冲突和碰撞，从而提高网络的传输效率和公平性。随着技术的进步，CSMA协议也发展出了不同的变体，如非坚持CSMA、1-坚持CSMA等，以满足不同场景下的需求。</p>
+<p>在网络负载较重的情况下。CSMA仍然会发生数据碰撞。而 CSMA&#x2F;CD 在发送数据之前不仅会侦听网络，而且还会检测网络上是否存在碰撞信号。如果存在碰撞，则会立即停止发送数据，并通过特殊的反馈机制（反弹，发送信号加强冲突）通知网络中的其他计算机停止发送数据。计算机之间将等待随机时间，然后重新尝试发送数据。</p>
+<p>在发送帧之前，先监听信道（载波），若信道空闲则将帧完整发送出去，若信道忙则推迟发送。</p>
+<div class="note-large blue"><div class="notel-title"><p>载波侦听多路访问</p>
+</div><div class="notel-content"><ul>
+<li><p>1-坚持CSMA<br>信道忙不能发送数据帧时，开始一直监听信道，一旦发现信道空闲马上发送数据。</p>
+</li>
+<li><p>非坚持CSMA<br>信道忙不能发送数据帧时，不立即监听信道，而是随机等待一段时间后再侦听信道。</p>
+</li>
+<li><p>P-坚持CSMA<br>有P的几率执行 1-坚持CSMA 的方案，有1-P的几率执行 非坚持CSMA 的方案。</p>
+</li>
+</ul>
+</div></div>
+
+<p>实际上，这三种协议在发生冲突后还是会坚持把数据帧发送完，往往造成资源浪费。</p>
+<h3 id="载波侦听多路访问与冲突检测"><a href="#载波侦听多路访问与冲突检测" class="headerlink" title="载波侦听多路访问与冲突检测"></a>载波侦听多路访问与冲突检测</h3><p>CSMA&#x2F;CD（Carrier Sense Multiple Access with Collision Detection，载波侦听多路访问与冲突检测）是一种用于以太网等局域网中的访问协议。</p>
+<p>CSMA&#x2F;CD协议扩展了基本的CSMA协议，增加了冲突检测机制。它的基本原理如下：</p>
+<ul>
+<li><p>载波侦听（Carrier Sense）：设备在发送数据之前，会侦听网络上是否有其他设备正在发送数据。如果检测到载波信号，表示网络正在被占用，设备会等待。</p>
+</li>
+<li><p>冲突检测（Collision Detection）：当一个设备开始发送数据后，它会继续侦听网络，以检测是否有其他设备也在发送数据。如果发现与自己发送的数据冲突（即多个设备同时发送导致干扰），设备会立即停止发送，并发送一个干扰信号给其他设备，以通知它们发生了冲突。</p>
+</li>
+<li><p>退避算法（Backoff Algorithm）：当冲突发生后，参与冲突的设备会等待一段随机的时间，然后再次尝试发送数据。这个随机的退避时间能够降低碰撞的概率，增加发送成功的机会。如果多次重试后仍然发生冲突，设备会停止发送并报告发送失败。</p>
+</li>
+</ul>
+<p>通过CSMA&#x2F;CD协议，多个设备可以共享同一以太网媒体进行数据传输。当冲突发生时，协议能够迅速检测到并采取相应的措施（比如停止发送数据帧），以减少数据冲突以及资源浪费。</p>
+<div class="note-large red"><div class="notel-title"><p>先听后发为什么还会冲突</p>
+</div><div class="notel-content"><p>因为电磁波的传播速率有限。</p>
+</div></div>
+
+<p>当重传达16次仍不成功时便认为此帧永远无法正确发出，抛弃此帧并向高层报错。</p>
+]]></content>
+      <tags>
+        <tag>Network Foundation</tag>
+        <tag>HCIA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络基础之以太网</title>
+    <url>/2023/11/15/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8BVLAN/</url>
+    <content><![CDATA[<h2 id="以太网"><a href="#以太网" class="headerlink" title="以太网"></a>以太网</h2><p>以太网（Ethernet）是一种计算机局域网技术，说白了就是局域网，IEEE组织的 IEEE 802.3 标准制定了以太网的技术标准规定了包括物理层的连线、电子信号和介质访问层协议的内容。</p>
+<p>以太网分为经典以太网和交换式以太网两类，其中交换式以太网又有快速以太网、千兆以太网和万兆以太网的形式。</p>
+<h3 id="经典以太网"><a href="#经典以太网" class="headerlink" title="经典以太网"></a>经典以太网</h3><p>经典以太网使用一根长电缆连接所有计算机。以太网有电缆最大长度限制，超过这个范围信号将无法传播（可以使用物理层设备比如中继器放大、重发信号），信息的发送使用曼彻斯特编码。</p>
+<p>经典以太网使用 1-坚持 CSMA&#x2F;CD 算法。</p>
+<p>由于其使用一个长电缆连接所有电脑，所以当以太网规模大时，出现故障很难定位到故障位置。</p>
+<h3 id="交换式以太网"><a href="#交换式以太网" class="headerlink" title="交换式以太网"></a>交换式以太网</h3><p>交换式以太网的核心是一个交换机（相当于不会发生信号冲突的集线器）。交换机只把帧输出到该帧想去的端口，通过简单的插入或者拔出电缆就能完成添加或者删除一台机器。如果出现问题，尝试更换一台交换机就能解决问题。</p>
+<h3 id="载波侦听多路访问"><a href="#载波侦听多路访问" class="headerlink" title="载波侦听多路访问"></a>载波侦听多路访问</h3><p>CSMA（Carrier Sense Multiple Access，载波侦听多路访问）是一种常见的访问协议，用于在共享媒体上进行数据传输。它被广泛应用于以太网等局域网和广域网中。</p>
+<p>CSMA协议的基本原理是，在发送数据之前，设备会先侦听网络上是否有其他设备正在发送数据。如果检测到有其他设备在发送数据，当前设备会等待一段时间，直到网络空闲为止。一旦网络空闲，设备才会开始发送数据。</p>
+<div class="note info"><p>CSMA协议仅依靠”载波侦听”的机制来判断网络是否处于忙碌状态。如果设备在发送数据之前侦听到了载波信号，即表示网络正在被占用，设备会等待一段时间再尝试发送。然而，由于多个设备可能同时开始发送数据，这就可能导致碰撞（collision）的问题。当多个设备在同一时间尝试发送数据时，它们的信号会相互干扰，导致数据损坏。</p>
+</div>
+
+<p>通过CSMA协议，设备可以按照一定的规则共享网络资源，避免数据冲突和碰撞，从而提高网络的传输效率和公平性。随着技术的进步，CSMA协议也发展出了不同的变体，如非坚持CSMA、1-坚持CSMA等，以满足不同场景下的需求。</p>
+<p>在网络负载较重的情况下。CSMA仍然会发生数据碰撞。而 CSMA&#x2F;CD 在发送数据之前不仅会侦听网络，而且还会检测网络上是否存在碰撞信号。如果存在碰撞，则会立即停止发送数据，并通过特殊的反馈机制（反弹，发送信号加强冲突）通知网络中的其他计算机停止发送数据。计算机之间将等待随机时间，然后重新尝试发送数据。</p>
+<p>在发送帧之前，先监听信道（载波），若信道空闲则将帧完整发送出去，若信道忙则推迟发送。</p>
+<div class="note-large blue"><div class="notel-title"><p>载波侦听多路访问</p>
+</div><div class="notel-content"><ul>
+<li><p>1-坚持CSMA<br>信道忙不能发送数据帧时，开始一直监听信道，一旦发现信道空闲马上发送数据。</p>
+</li>
+<li><p>非坚持CSMA<br>信道忙不能发送数据帧时，不立即监听信道，而是随机等待一段时间后再侦听信道。</p>
+</li>
+<li><p>P-坚持CSMA<br>有P的几率执行 1-坚持CSMA 的方案，有1-P的几率执行 非坚持CSMA 的方案。</p>
+</li>
+</ul>
+</div></div>
+
+<p>实际上，这三种协议在发生冲突后还是会坚持把数据帧发送完，往往造成资源浪费。</p>
+<h3 id="载波侦听多路访问与冲突检测"><a href="#载波侦听多路访问与冲突检测" class="headerlink" title="载波侦听多路访问与冲突检测"></a>载波侦听多路访问与冲突检测</h3><p>CSMA&#x2F;CD（Carrier Sense Multiple Access with Collision Detection，载波侦听多路访问与冲突检测）是一种用于以太网等局域网中的访问协议。</p>
+<p>CSMA&#x2F;CD协议扩展了基本的CSMA协议，增加了冲突检测机制。它的基本原理如下：</p>
+<ul>
+<li><p>载波侦听（Carrier Sense）：设备在发送数据之前，会侦听网络上是否有其他设备正在发送数据。如果检测到载波信号，表示网络正在被占用，设备会等待。</p>
+</li>
+<li><p>冲突检测（Collision Detection）：当一个设备开始发送数据后，它会继续侦听网络，以检测是否有其他设备也在发送数据。如果发现与自己发送的数据冲突（即多个设备同时发送导致干扰），设备会立即停止发送，并发送一个干扰信号给其他设备，以通知它们发生了冲突。</p>
+</li>
+<li><p>退避算法（Backoff Algorithm）：当冲突发生后，参与冲突的设备会等待一段随机的时间，然后再次尝试发送数据。这个随机的退避时间能够降低碰撞的概率，增加发送成功的机会。如果多次重试后仍然发生冲突，设备会停止发送并报告发送失败。</p>
+</li>
+</ul>
+<p>通过CSMA&#x2F;CD协议，多个设备可以共享同一以太网媒体进行数据传输。当冲突发生时，协议能够迅速检测到并采取相应的措施（比如停止发送数据帧），以减少数据冲突以及资源浪费。</p>
+<div class="note-large red"><div class="notel-title"><p>先听后发为什么还会冲突</p>
+</div><div class="notel-content"><p>因为电磁波的传播速率有限。</p>
+</div></div>
+
+<p>当重传达16次仍不成功时便认为此帧永远无法正确发出，抛弃此帧并向高层报错。</p>
+]]></content>
+      <tags>
+        <tag>Network Foundation</tag>
+        <tag>HCIA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络基础之以太网</title>
+    <url>/2023/11/15/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8BSTP/</url>
+    <content><![CDATA[<h2 id="以太网"><a href="#以太网" class="headerlink" title="以太网"></a>以太网</h2><p>以太网（Ethernet）是一种计算机局域网技术，说白了就是局域网，IEEE组织的 IEEE 802.3 标准制定了以太网的技术标准规定了包括物理层的连线、电子信号和介质访问层协议的内容。</p>
+<p>以太网分为经典以太网和交换式以太网两类，其中交换式以太网又有快速以太网、千兆以太网和万兆以太网的形式。</p>
+<h3 id="经典以太网"><a href="#经典以太网" class="headerlink" title="经典以太网"></a>经典以太网</h3><p>经典以太网使用一根长电缆连接所有计算机。以太网有电缆最大长度限制，超过这个范围信号将无法传播（可以使用物理层设备比如中继器放大、重发信号），信息的发送使用曼彻斯特编码。</p>
+<p>经典以太网使用 1-坚持 CSMA&#x2F;CD 算法。</p>
+<p>由于其使用一个长电缆连接所有电脑，所以当以太网规模大时，出现故障很难定位到故障位置。</p>
+<h3 id="交换式以太网"><a href="#交换式以太网" class="headerlink" title="交换式以太网"></a>交换式以太网</h3><p>交换式以太网的核心是一个交换机（相当于不会发生信号冲突的集线器）。交换机只把帧输出到该帧想去的端口，通过简单的插入或者拔出电缆就能完成添加或者删除一台机器。如果出现问题，尝试更换一台交换机就能解决问题。</p>
+<h3 id="载波侦听多路访问"><a href="#载波侦听多路访问" class="headerlink" title="载波侦听多路访问"></a>载波侦听多路访问</h3><p>CSMA（Carrier Sense Multiple Access，载波侦听多路访问）是一种常见的访问协议，用于在共享媒体上进行数据传输。它被广泛应用于以太网等局域网和广域网中。</p>
+<p>CSMA协议的基本原理是，在发送数据之前，设备会先侦听网络上是否有其他设备正在发送数据。如果检测到有其他设备在发送数据，当前设备会等待一段时间，直到网络空闲为止。一旦网络空闲，设备才会开始发送数据。</p>
+<div class="note info"><p>CSMA协议仅依靠”载波侦听”的机制来判断网络是否处于忙碌状态。如果设备在发送数据之前侦听到了载波信号，即表示网络正在被占用，设备会等待一段时间再尝试发送。然而，由于多个设备可能同时开始发送数据，这就可能导致碰撞（collision）的问题。当多个设备在同一时间尝试发送数据时，它们的信号会相互干扰，导致数据损坏。</p>
+</div>
+
+<p>通过CSMA协议，设备可以按照一定的规则共享网络资源，避免数据冲突和碰撞，从而提高网络的传输效率和公平性。随着技术的进步，CSMA协议也发展出了不同的变体，如非坚持CSMA、1-坚持CSMA等，以满足不同场景下的需求。</p>
+<p>在网络负载较重的情况下。CSMA仍然会发生数据碰撞。而 CSMA&#x2F;CD 在发送数据之前不仅会侦听网络，而且还会检测网络上是否存在碰撞信号。如果存在碰撞，则会立即停止发送数据，并通过特殊的反馈机制（反弹，发送信号加强冲突）通知网络中的其他计算机停止发送数据。计算机之间将等待随机时间，然后重新尝试发送数据。</p>
+<p>在发送帧之前，先监听信道（载波），若信道空闲则将帧完整发送出去，若信道忙则推迟发送。</p>
+<div class="note-large blue"><div class="notel-title"><p>载波侦听多路访问</p>
+</div><div class="notel-content"><ul>
+<li><p>1-坚持CSMA<br>信道忙不能发送数据帧时，开始一直监听信道，一旦发现信道空闲马上发送数据。</p>
+</li>
+<li><p>非坚持CSMA<br>信道忙不能发送数据帧时，不立即监听信道，而是随机等待一段时间后再侦听信道。</p>
+</li>
+<li><p>P-坚持CSMA<br>有P的几率执行 1-坚持CSMA 的方案，有1-P的几率执行 非坚持CSMA 的方案。</p>
+</li>
+</ul>
+</div></div>
+
+<p>实际上，这三种协议在发生冲突后还是会坚持把数据帧发送完，往往造成资源浪费。</p>
+<h3 id="载波侦听多路访问与冲突检测"><a href="#载波侦听多路访问与冲突检测" class="headerlink" title="载波侦听多路访问与冲突检测"></a>载波侦听多路访问与冲突检测</h3><p>CSMA&#x2F;CD（Carrier Sense Multiple Access with Collision Detection，载波侦听多路访问与冲突检测）是一种用于以太网等局域网中的访问协议。</p>
+<p>CSMA&#x2F;CD协议扩展了基本的CSMA协议，增加了冲突检测机制。它的基本原理如下：</p>
+<ul>
+<li><p>载波侦听（Carrier Sense）：设备在发送数据之前，会侦听网络上是否有其他设备正在发送数据。如果检测到载波信号，表示网络正在被占用，设备会等待。</p>
+</li>
+<li><p>冲突检测（Collision Detection）：当一个设备开始发送数据后，它会继续侦听网络，以检测是否有其他设备也在发送数据。如果发现与自己发送的数据冲突（即多个设备同时发送导致干扰），设备会立即停止发送，并发送一个干扰信号给其他设备，以通知它们发生了冲突。</p>
+</li>
+<li><p>退避算法（Backoff Algorithm）：当冲突发生后，参与冲突的设备会等待一段随机的时间，然后再次尝试发送数据。这个随机的退避时间能够降低碰撞的概率，增加发送成功的机会。如果多次重试后仍然发生冲突，设备会停止发送并报告发送失败。</p>
+</li>
+</ul>
+<p>通过CSMA&#x2F;CD协议，多个设备可以共享同一以太网媒体进行数据传输。当冲突发生时，协议能够迅速检测到并采取相应的措施（比如停止发送数据帧），以减少数据冲突以及资源浪费。</p>
+<div class="note-large red"><div class="notel-title"><p>先听后发为什么还会冲突</p>
+</div><div class="notel-content"><p>因为电磁波的传播速率有限。</p>
+</div></div>
+
+<p>当重传达16次仍不成功时便认为此帧永远无法正确发出，抛弃此帧并向高层报错。</p>
+]]></content>
+      <tags>
+        <tag>Network Foundation</tag>
+        <tag>HCIA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络基础之以太网</title>
+    <url>/2023/10/20/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8B%E4%BB%A5%E5%A4%AA%E7%BD%91/</url>
+    <content><![CDATA[<h2 id="以太网"><a href="#以太网" class="headerlink" title="以太网"></a>以太网</h2><p>以太网（Ethernet）是一种计算机局域网技术，说白了就是局域网，IEEE组织的 IEEE 802.3 标准制定了以太网的技术标准规定了包括物理层的连线、电子信号和介质访问层协议的内容。</p>
+<p>以太网分为经典以太网和交换式以太网两类，其中交换式以太网又有快速以太网、千兆以太网和万兆以太网的形式。</p>
+<h3 id="经典以太网"><a href="#经典以太网" class="headerlink" title="经典以太网"></a>经典以太网</h3><p>经典以太网使用一根长电缆连接所有计算机。以太网有电缆最大长度限制，超过这个范围信号将无法传播（可以使用物理层设备比如中继器放大、重发信号），信息的发送使用曼彻斯特编码。</p>
+<p>经典以太网使用 1-坚持 CSMA&#x2F;CD 算法。</p>
+<p>由于其使用一个长电缆连接所有电脑，所以当以太网规模大时，出现故障很难定位到故障位置。</p>
+<h3 id="交换式以太网"><a href="#交换式以太网" class="headerlink" title="交换式以太网"></a>交换式以太网</h3><p>交换式以太网的核心是一个交换机（相当于不会发生信号冲突的集线器）。交换机只把帧输出到该帧想去的端口，通过简单的插入或者拔出电缆就能完成添加或者删除一台机器。如果出现问题，尝试更换一台交换机就能解决问题。</p>
+<h3 id="载波侦听多路访问"><a href="#载波侦听多路访问" class="headerlink" title="载波侦听多路访问"></a>载波侦听多路访问</h3><p>CSMA（Carrier Sense Multiple Access，载波侦听多路访问）是一种常见的访问协议，用于在共享媒体上进行数据传输。它被广泛应用于以太网等局域网和广域网中。</p>
+<p>CSMA协议的基本原理是，在发送数据之前，设备会先侦听网络上是否有其他设备正在发送数据。如果检测到有其他设备在发送数据，当前设备会等待一段时间，直到网络空闲为止。一旦网络空闲，设备才会开始发送数据。</p>
+<div class="note info"><p>CSMA协议仅依靠”载波侦听”的机制来判断网络是否处于忙碌状态。如果设备在发送数据之前侦听到了载波信号，即表示网络正在被占用，设备会等待一段时间再尝试发送。然而，由于多个设备可能同时开始发送数据，这就可能导致碰撞（collision）的问题。当多个设备在同一时间尝试发送数据时，它们的信号会相互干扰，导致数据损坏。</p>
+</div>
+
+<p>通过CSMA协议，设备可以按照一定的规则共享网络资源，避免数据冲突和碰撞，从而提高网络的传输效率和公平性。随着技术的进步，CSMA协议也发展出了不同的变体，如非坚持CSMA、1-坚持CSMA等，以满足不同场景下的需求。</p>
+<p>在网络负载较重的情况下。CSMA仍然会发生数据碰撞。而 CSMA&#x2F;CD 在发送数据之前不仅会侦听网络，而且还会检测网络上是否存在碰撞信号。如果存在碰撞，则会立即停止发送数据，并通过特殊的反馈机制（反弹，发送信号加强冲突）通知网络中的其他计算机停止发送数据。计算机之间将等待随机时间，然后重新尝试发送数据。</p>
+<p>在发送帧之前，先监听信道（载波），若信道空闲则将帧完整发送出去，若信道忙则推迟发送。</p>
+<div class="note-large blue"><div class="notel-title"><p>载波侦听多路访问</p>
+</div><div class="notel-content"><ul>
+<li><p>1-坚持CSMA<br>信道忙不能发送数据帧时，开始一直监听信道，一旦发现信道空闲马上发送数据。</p>
+</li>
+<li><p>非坚持CSMA<br>信道忙不能发送数据帧时，不立即监听信道，而是随机等待一段时间后再侦听信道。</p>
+</li>
+<li><p>P-坚持CSMA<br>有P的几率执行 1-坚持CSMA 的方案，有1-P的几率执行 非坚持CSMA 的方案。</p>
+</li>
+</ul>
+</div></div>
+
+<p>实际上，这三种协议在发生冲突后还是会坚持把数据帧发送完，往往造成资源浪费。</p>
+<h3 id="载波侦听多路访问与冲突检测"><a href="#载波侦听多路访问与冲突检测" class="headerlink" title="载波侦听多路访问与冲突检测"></a>载波侦听多路访问与冲突检测</h3><p>CSMA&#x2F;CD（Carrier Sense Multiple Access with Collision Detection，载波侦听多路访问与冲突检测）是一种用于以太网等局域网中的访问协议。</p>
+<p>CSMA&#x2F;CD协议扩展了基本的CSMA协议，增加了冲突检测机制。它的基本原理如下：</p>
+<ul>
+<li><p>载波侦听（Carrier Sense）：设备在发送数据之前，会侦听网络上是否有其他设备正在发送数据。如果检测到载波信号，表示网络正在被占用，设备会等待。</p>
+</li>
+<li><p>冲突检测（Collision Detection）：当一个设备开始发送数据后，它会继续侦听网络，以检测是否有其他设备也在发送数据。如果发现与自己发送的数据冲突（即多个设备同时发送导致干扰），设备会立即停止发送，并发送一个干扰信号给其他设备，以通知它们发生了冲突。</p>
+</li>
+<li><p>退避算法（Backoff Algorithm）：当冲突发生后，参与冲突的设备会等待一段随机的时间，然后再次尝试发送数据。这个随机的退避时间能够降低碰撞的概率，增加发送成功的机会。如果多次重试后仍然发生冲突，设备会停止发送并报告发送失败。</p>
+</li>
+</ul>
+<p>通过CSMA&#x2F;CD协议，多个设备可以共享同一以太网媒体进行数据传输。当冲突发生时，协议能够迅速检测到并采取相应的措施（比如停止发送数据帧），以减少数据冲突以及资源浪费。</p>
+<div class="note-large red"><div class="notel-title"><p>先听后发为什么还会冲突</p>
+</div><div class="notel-content"><p>因为电磁波的传播速率有限。</p>
+</div></div>
+
+<p>当重传达16次仍不成功时便认为此帧永远无法正确发出，抛弃此帧并向高层报错。</p>
+]]></content>
+      <tags>
+        <tag>Network Foundation</tag>
+        <tag>HCIA</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>网络基础之OSPF</title>
+    <url>/2023/11/15/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8B%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1%E5%8D%8F%E8%AE%AE/</url>
+    <content><![CDATA[<h2 id="开放路径最短优先"><a href="#开放路径最短优先" class="headerlink" title="开放路径最短优先"></a>开放路径最短优先</h2><p>开放式最短路径优先 ( Open Shortest Path First, OSPF ) ，是一种动态路由协议，因其出色的表现，目前被广泛使用。</p>
+<h3 id="经典以太网"><a href="#经典以太网" class="headerlink" title="经典以太网"></a>经典以太网</h3><p>经典以太网使用一根长电缆连接所有计算机。以太网有电缆最大长度限制，超过这个范围信号将无法传播（可以使用物理层设备比如中继器放大、重发信号），信息的发送使用曼彻斯特编码。</p>
+<p>经典以太网使用 1-坚持 CSMA&#x2F;CD 算法。</p>
+<p>由于其使用一个长电缆连接所有电脑，所以当以太网规模大时，出现故障很难定位到故障位置。</p>
+<h3 id="交换式以太网"><a href="#交换式以太网" class="headerlink" title="交换式以太网"></a>交换式以太网</h3><p>交换式以太网的核心是一个交换机（相当于不会发生信号冲突的集线器）。交换机只把帧输出到该帧想去的端口，通过简单的插入或者拔出电缆就能完成添加或者删除一台机器。如果出现问题，尝试更换一台交换机就能解决问题。</p>
+<h3 id="载波侦听多路访问"><a href="#载波侦听多路访问" class="headerlink" title="载波侦听多路访问"></a>载波侦听多路访问</h3><p>CSMA（Carrier Sense Multiple Access，载波侦听多路访问）是一种常见的访问协议，用于在共享媒体上进行数据传输。它被广泛应用于以太网等局域网和广域网中。</p>
+<p>CSMA协议的基本原理是，在发送数据之前，设备会先侦听网络上是否有其他设备正在发送数据。如果检测到有其他设备在发送数据，当前设备会等待一段时间，直到网络空闲为止。一旦网络空闲，设备才会开始发送数据。</p>
+<div class="note info"><p>CSMA协议仅依靠”载波侦听”的机制来判断网络是否处于忙碌状态。如果设备在发送数据之前侦听到了载波信号，即表示网络正在被占用，设备会等待一段时间再尝试发送。然而，由于多个设备可能同时开始发送数据，这就可能导致碰撞（collision）的问题。当多个设备在同一时间尝试发送数据时，它们的信号会相互干扰，导致数据损坏。</p>
+</div>
+
+<p>通过CSMA协议，设备可以按照一定的规则共享网络资源，避免数据冲突和碰撞，从而提高网络的传输效率和公平性。随着技术的进步，CSMA协议也发展出了不同的变体，如非坚持CSMA、1-坚持CSMA等，以满足不同场景下的需求。</p>
+<p>在网络负载较重的情况下。CSMA仍然会发生数据碰撞。而 CSMA&#x2F;CD 在发送数据之前不仅会侦听网络，而且还会检测网络上是否存在碰撞信号。如果存在碰撞，则会立即停止发送数据，并通过特殊的反馈机制（反弹，发送信号加强冲突）通知网络中的其他计算机停止发送数据。计算机之间将等待随机时间，然后重新尝试发送数据。</p>
+<p>在发送帧之前，先监听信道（载波），若信道空闲则将帧完整发送出去，若信道忙则推迟发送。</p>
+<div class="note-large blue"><div class="notel-title"><p>载波侦听多路访问</p>
+</div><div class="notel-content"><ul>
+<li><p>1-坚持CSMA<br>信道忙不能发送数据帧时，开始一直监听信道，一旦发现信道空闲马上发送数据。</p>
+</li>
+<li><p>非坚持CSMA<br>信道忙不能发送数据帧时，不立即监听信道，而是随机等待一段时间后再侦听信道。</p>
+</li>
+<li><p>P-坚持CSMA<br>有P的几率执行 1-坚持CSMA 的方案，有1-P的几率执行 非坚持CSMA 的方案。</p>
+</li>
+</ul>
+</div></div>
+
+<p>实际上，这三种协议在发生冲突后还是会坚持把数据帧发送完，往往造成资源浪费。</p>
+<h3 id="载波侦听多路访问与冲突检测"><a href="#载波侦听多路访问与冲突检测" class="headerlink" title="载波侦听多路访问与冲突检测"></a>载波侦听多路访问与冲突检测</h3><p>CSMA&#x2F;CD（Carrier Sense Multiple Access with Collision Detection，载波侦听多路访问与冲突检测）是一种用于以太网等局域网中的访问协议。</p>
+<p>CSMA&#x2F;CD协议扩展了基本的CSMA协议，增加了冲突检测机制。它的基本原理如下：</p>
+<ul>
+<li><p>载波侦听（Carrier Sense）：设备在发送数据之前，会侦听网络上是否有其他设备正在发送数据。如果检测到载波信号，表示网络正在被占用，设备会等待。</p>
+</li>
+<li><p>冲突检测（Collision Detection）：当一个设备开始发送数据后，它会继续侦听网络，以检测是否有其他设备也在发送数据。如果发现与自己发送的数据冲突（即多个设备同时发送导致干扰），设备会立即停止发送，并发送一个干扰信号给其他设备，以通知它们发生了冲突。</p>
+</li>
+<li><p>退避算法（Backoff Algorithm）：当冲突发生后，参与冲突的设备会等待一段随机的时间，然后再次尝试发送数据。这个随机的退避时间能够降低碰撞的概率，增加发送成功的机会。如果多次重试后仍然发生冲突，设备会停止发送并报告发送失败。</p>
+</li>
+</ul>
+<p>通过CSMA&#x2F;CD协议，多个设备可以共享同一以太网媒体进行数据传输。当冲突发生时，协议能够迅速检测到并采取相应的措施（比如停止发送数据帧），以减少数据冲突以及资源浪费。</p>
+<div class="note-large red"><div class="notel-title"><p>先听后发为什么还会冲突</p>
+</div><div class="notel-content"><p>因为电磁波的传播速率有限。</p>
+</div></div>
+
+<p>当重传达16次仍不成功时便认为此帧永远无法正确发出，抛弃此帧并向高层报错。</p>
+]]></content>
+      <tags>
+        <tag>Network Foundation</tag>
+        <tag>HCIA</tag>
       </tags>
   </entry>
 </search>

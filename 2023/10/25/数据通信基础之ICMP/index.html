@@ -18,12 +18,12 @@
     <meta name="googlebot" content="index,follow">
     <meta name="revisit-after" content="1 days">
     
-        <meta name="description" content="因特网控制报文协议ICMP（Internet Control Message Protocol）Internet控制报文协议。它是TCP&#x2F;IP协议簇的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。ICMP协议是一种面向无连接的网络层协议，对网络">
+        <meta name="description" content="因特网控制报文协议因特网控制报文协议 ( Internet Control Message Protocol, ICMP ) ，是TCP&#x2F;IP协议簇的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。ICMP协议是一种面向无连接的网络层协议，对网络">
 <meta property="og:type" content="article">
 <meta property="og:title" content="数据通信基础之ICMP">
 <meta property="og:url" content="https://ccbh233.github.io/2023/10/25/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8BICMP/index.html">
 <meta property="og:site_name" content="ITBLOG | CCBH">
-<meta property="og:description" content="因特网控制报文协议ICMP（Internet Control Message Protocol）Internet控制报文协议。它是TCP&#x2F;IP协议簇的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。ICMP协议是一种面向无连接的网络层协议，对网络">
+<meta property="og:description" content="因特网控制报文协议因特网控制报文协议 ( Internet Control Message Protocol, ICMP ) ，是TCP&#x2F;IP协议簇的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。ICMP协议是一种面向无连接的网络层协议，对网络">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://ccbh233.github.io/images/ICMP__packet__structure.jpg">
 <meta property="og:image" content="https://ccbh233.github.io/images/049b3213-0256-4301-95bd-e66ce683fa0b.png">
@@ -35,11 +35,11 @@
 <meta property="og:image" content="https://ccbh233.github.io/images/1bc1bb97-d17b-4c68-b950-474e9eb2e414.png">
 <meta property="og:image" content="https://ccbh233.github.io/images/6bc0d444-bd65-4ab7-b422-f20ee7891d72.png">
 <meta property="article:published_time" content="2023-10-25T00:55:42.436Z">
-<meta property="article:modified_time" content="2023-10-25T08:26:43.387Z">
+<meta property="article:modified_time" content="2023-11-15T00:16:42.586Z">
 <meta property="article:author" content="Central China">
 <meta property="article:tag" content="Network Engineer">
 <meta property="article:tag" content="Network Foundation">
-<meta property="article:tag" content="Network System Management">
+<meta property="article:tag" content="HCIA">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://ccbh233.github.io/images/ICMP__packet__structure.jpg">
     
@@ -241,7 +241,7 @@
                     <div class="author flex items-center">
                         <span class="name text-default-text-color text-lg font-semibold">Central China</span>
                         
-                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv1</span>
+                            <span class="author-label ml-1.5 text-xs px-2 py-0.5 rounded-small text-third-text-color border border-shadow-color-1">Lv2</span>
                         
                     </div>
                     <div class="meta-info">
@@ -255,8 +255,8 @@
     
         <span class="article-date article-meta-item">
             <i class="fa-regular fa-wrench"></i>&nbsp;
-            <span class="desktop">2023-10-25 16:26:43</span>
-            <span class="mobile">2023-10-25 16:26:43</span>
+            <span class="desktop">2023-11-15 08:16:42</span>
+            <span class="mobile">2023-11-15 08:16:42</span>
             <span class="hover-info">更新</span>
         </span>
     
@@ -276,7 +276,7 @@
                     </li>
                 
                     <li>
-                        | <a href="/tags/Network-System-Management/">Network System Management</a>&nbsp;
+                        | <a href="/tags/HCIA/">HCIA</a>&nbsp;
                     </li>
                 
             </ul>
@@ -302,7 +302,7 @@
 
 
         <div class="article-content markdown-body">
-            <h2 id="因特网控制报文协议"><a href="#因特网控制报文协议" class="headerlink" title="因特网控制报文协议"></a>因特网控制报文协议</h2><p>ICMP（Internet Control Message Protocol）Internet控制报文协议。它是TCP&#x2F;IP协议簇的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。ICMP协议是一种面向无连接的网络层协议，对网络的连接状况判断非常有用。另外，ICMP只</p>
+            <h2 id="因特网控制报文协议"><a href="#因特网控制报文协议" class="headerlink" title="因特网控制报文协议"></a>因特网控制报文协议</h2><p>因特网控制报文协议 ( Internet Control Message Protocol, ICMP ) ，是TCP&#x2F;IP协议簇的一个子协议，用于在IP主机、路由器之间传递控制消息。控制消息是指网络通不通、主机是否可达、路由是否可用等网络本身的消息。这些控制消息虽然并不传输用户数据，但是对于用户数据的传递起着重要的作用。ICMP协议是一种面向无连接的网络层协议，对网络的连接状况判断非常有用。另外，ICMP只</p>
 <p>通俗来讲，它用于报告错误，例如，请求的服务不可用或无法访问主机或路由器。在数据传输过程中，IP协议尽可能的保证数据包到达目的地址，但并不对数据包是否到达目的地址进行验证，因此总是会产生各种错误，ICMP应运而生。</p>
 <div class="note-large blue"><div class="notel-title"><p>面向无连接</p>
 </div><div class="notel-content"><p>“面向无连接”是指在通信过程中，发送方和接收方之间不需要建立持久的连接或会话，每个数据包都是独立地处理和传输的。</p>
@@ -402,7 +402,7 @@
 <p>发现了吗，一个返回无法访问目标主机，一个返回请求超时，那么为什么会出现两种不一样的返回？</p>
 <p>注意到 10.154.250.250 和 10.155.250.250 都是私网地址，我们的IP地址为 10.154.58.14 ，而 10.154.250.250 与我们是同一网段， 10.155.250.250 与我们不在同一网段。上文(<a href="https://ccbh233.github.io/2023/10/24/%E6%95%B0%E6%8D%AE%E9%80%9A%E4%BF%A1%E5%9F%BA%E7%A1%80%E4%B9%8BARP/">数据通信基础之ARP</a>)在介绍ARP时就已经说过，在局域网内进行通信时一般使用MAC地址进行通信。</p>
 <p>Ping 10.154.250.250 时，由于我的主机没有 10.154.250.250 的地址，因此会先发送ARP广播请求 10.154.250.250 的MAC地址，但是因为没有主机回应它，因此我的主机迟迟不能获得 10.154.250.250 的MAC地址，于是返回“无法访问目标主机”的错误信息。</p>
-<p>Ping 10.155.250.250 时，由于目标与我的主机不是同一网段，于是使用ICMP协议，构建一个回送请求(echo request)数据包。之后，查询网关的MAC地址，如果已经在ARP缓存表中找到了网关的MAC地址，那么就直接使用它；如果没有找到，那么就发送一个ARP请求广播，等待网关回复一个ARP应答，告知它的MAC地址。然后将ICMP数据包封装在一个以太网帧中，其中目的MAC地址是网关的MAC地址。网关收到这个帧后，会检查MAC地址是否和自己匹配。匹配则根据目标IP地址进行路由选择。若网关知道如何到达目标IP地址就将ICMP数据包转发给下一跳，若不知道就返回一个ICMP目标不可达(destination unreachable)数据包。</p>
+<p>Ping 10.155.250.250 时，由于目标与我的主机不是同一网段，于是使用ICMP协议，构建一个回送请求(echo request)数据包。之后，查询网关的MAC地址，如果已经在ARP缓存表中找到了网关的MAC地址，那么就直接使用它；如果没有找到，那么就发送一个ARP请求广播，等待网关回复一个ARP应答，告知它的MAC地址。然后将ICMP数据包封装在一个以太网帧中，其中目的MAC地址是网关的MAC地址。网关收到这个帧后，会检查MAC地址是否和自己匹配。匹配则根据目标IP地址进行路由选择。若网关知道如何到达目标IP地址就将ICMP数据包转发给下一跳，若不知道就返回一个ICMP目标不可达(destination unreachable)数据包，丢弃该数据包。</p>
 
         </div>
 
@@ -417,7 +417,7 @@
         
             <li>
                 <strong>更新于
-                    :</strong> 2023-10-25 16:26:43
+                    :</strong> 2023-11-15 08:16:42
             </li>
         
         <li>
@@ -450,7 +450,7 @@
                     </li>
                 
                     <li class="tag-item">
-                        <a href="/tags/Network-System-Management/">#Network System Management</a>&nbsp;
+                        <a href="/tags/HCIA/">#HCIA</a>&nbsp;
                     </li>
                 
             </ul>
@@ -460,6 +460,21 @@
 
         
             <div class="article-nav">
+                
+                    <div class="article-prev">
+                        <a class="prev"
+                        rel="prev"
+                        href="/2023/11/15/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E4%B9%8BVLAN/"
+                        >
+                            <span class="left arrow-icon flex justify-center items-center">
+                                <i class="fa-solid fa-chevron-left"></i>
+                            </span>
+                            <span class="title flex justify-center items-center">
+                                <span class="post-nav-title-item">网络基础之以太网</span>
+                                <span class="post-nav-item">上一篇</span>
+                            </span>
+                        </a>
+                    </div>
                 
                 
                     <div class="article-next">
